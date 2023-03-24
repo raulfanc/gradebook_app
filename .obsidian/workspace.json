@@ -33,8 +33,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -100,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ideas/PostgreSQL.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -117,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ideas/PostgreSQL.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -140,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ideas/PostgreSQL.md"
+                "file": "README.md"
               }
             }
           }
@@ -162,19 +161,20 @@
       "gpt3-notes:GPT-3 Notes": false
     }
   },
-  "active": "f52d63034bb4ace0",
+  "active": "bae5a03b5aa89080",
   "lastOpenFiles": [
-    "venv/bin/dotenv",
-    "venv/lib/python3.10/site-packages/python_dotenv-1.0.0.dist-info/top_level.txt",
-    "venv/lib/python3.10/site-packages/python_dotenv-1.0.0.dist-info/entry_points.txt",
-    "venv/lib/python3.10/site-packages/python_dotenv-1.0.0.dist-info/WHEEL",
-    "venv/lib/python3.10/site-packages/python_dotenv-1.0.0.dist-info/REQUESTED",
-    "venv/lib/python3.10/site-packages/python_dotenv-1.0.0.dist-info/RECORD",
-    "venv/lib/python3.10/site-packages/python_dotenv-1.0.0.dist-info/METADATA",
-    "venv/lib/python3.10/site-packages/python_dotenv-1.0.0.dist-info/LICENSE",
-    "venv/lib/python3.10/site-packages/python_dotenv-1.0.0.dist-info/INSTALLER",
-    "venv/lib/python3.10/site-packages/python_dotenv-1.0.0.dist-info",
-    "venv/lib/python3.10/site-packages/dotenv/__pycache__/cli.cpython-310.pyc",
+    "venv/lib/python3.10/site-packages/pylint_django-2.5.3.dist-info/top_level.txt",
+    "venv/lib/python3.10/site-packages/pylint_django-2.5.3.dist-info/WHEEL",
+    "venv/lib/python3.10/site-packages/pylint_django-2.5.3.dist-info/REQUESTED",
+    "venv/lib/python3.10/site-packages/pylint_django-2.5.3.dist-info/RECORD",
+    "venv/lib/python3.10/site-packages/pylint_django-2.5.3.dist-info/METADATA",
+    "venv/lib/python3.10/site-packages/pylint_django-2.5.3.dist-info/LICENSE",
+    "venv/lib/python3.10/site-packages/pylint_django-2.5.3.dist-info/INSTALLER",
+    "venv/lib/python3.10/site-packages/pylint_django-2.5.3.dist-info",
+    "venv/lib/python3.10/site-packages/pylint_django/tests/input/test_app/__pycache__/models.cpython-310.pyc",
+    "venv/lib/python3.10/site-packages/pylint_django/tests/input/test_app/__pycache__/apps.cpython-310.pyc",
+    "venv/lib/python3.10/site-packages/pylint_django/tests/input/test_app/__pycache__/__init__.cpython-310.pyc",
+    "ideas/PostgreSQL.md",
     "README.md",
     "resources/Django/manager_module.md",
     "week3_more_Django.md",
@@ -199,7 +199,6 @@
     "resources/Django/Module_admin.md",
     "resources/PostgreSQL.md",
     "resources/Django/Django-debug-toolbar.md",
-    "resources/HTML/Cool URIs don't change.md",
     "attachments/django_table_postgresql_server.png",
     "attachments/pgadmin.png",
     "attachments/Pasted image 20230313012710.png",

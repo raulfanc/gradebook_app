@@ -37,11 +37,14 @@ git commit -m "Initial commit"
 - [x] 8. set up [[GitHub]] with PyCharm's VCS
 - [x] 9. Follow [[Data Grip]] to set up, this is similar to PgAdmin4, but more advanced.
 - [x] 10. Follow [[PostgreSQL]] set up 
-- [ ] 11.  **Update README.md**
-    -   Document the project progress, decisions, and other information in the README.md 
-    -   Commit and push changes to GitHub regularly
-- [ ] 12.**Create the Models (Part A)**
--   Refer to the class diagram and create  models in **gradebook/models.py**
+- [x] 11.  **Update README.md**
+    - [x] -   Document the project progress, decisions, and other information in the README.md 
+    - [x] -   Commit and push changes to GitHub regularly
+    - [x] -  `sudo lsof -t -i tcp:8000` monitor port 8000, for example if 86597, then use `kill -9 86597`
+- [ ] 12. **install django debug toolbar** [link](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html)
+- [ ] 13. **install pylint-django** `pip install pylint-django`
+- [ ] 13. **Create the Models (Part A)**
+-   Refer to the class diagram and create models in **gradebook/models.py**
 -   Make sure to add any necessary many-to-many relationships
 -   Run **python manage.py makemigrations** and **python manage.py migrate** to apply the model changes
 - [ ] 13. **Create Views (Part B)**

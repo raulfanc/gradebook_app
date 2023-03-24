@@ -52,11 +52,13 @@ makefileCopy code
 
 `DB_NAME=test DB_USER=admin DB_PASSWORD=test123 DB_HOST=localhost DB_PORT=5432`
 
-3.  Add the `.env` file to your `.gitignore` file to prevent it from being tracked by Git:
+3.  configure .gitignore and .env
+- .  Make sure your `.gitignore` file is in the root of your project folder (the same level as your `.env` file).
+- .  Check the contents of your `.gitignore` file. It should contain the following line:
+`.env`
+- .  If the `.env` file has already been tracked by Git, you need to remove it from the Git index. You can do this by running the following command in your terminal:`git rm --cached .env`
 
-bashCopy code
-
-`# .gitignore .env`
+- .  Now, commit your changes and push them to your GitHub repository. The `.env` file should no longer be tracked by Git, and it won't appear in your GitHub repository.
 
 4.  In your `settings.py` file, import the `os` module and load the environment variables from the `.env` file using `load_dotenv`:
 
