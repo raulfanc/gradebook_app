@@ -4,9 +4,8 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
-# create(),update(),delete(),getSemester(),getCourse(),getLecturer(),getStudent(),getClass(),getEnrollment()
 class Semester(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name="Semester Name", help_text="Enter the name of the semester")
     start_date = models.DateField()
     end_date = models.DateField()
     year = models.IntegerField()
@@ -20,7 +19,7 @@ class Semester(models.Model):
 
 class Course(models.Model):
     title = models.CharField(max_length=100)
-    code = models.CharField(max_length=10, unique=True)
+    code = models.SlugField(max_length=10, unique=True),
     description = models.TextField(blank=True)
     tags = models.ManyToManyField('Tag')
 
@@ -50,7 +49,7 @@ class Lecturer(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    enrollment_date = models.DateField()
+    enrollment_date = models.DateField(auto_now_add=True)
     StudentID = models.CharField(max_length=10)
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
@@ -66,7 +65,7 @@ class Student(models.Model):
 
 class Class(models.Model):
     number = models.PositiveIntegerField()
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="classes")
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student, through='Enrollment')
@@ -85,13 +84,14 @@ class Enrollment(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     grade = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     enroll_time = models.DateTimeField(auto_now_add=True)
-    grade_time = models.DateTimeField(null=True, blank=True)
+    grade_time = models.DateTimeField(null=True, blank=True, auto_now=True)
 
     def __str__(self):
         return f"{self.student} - {self.class_obj}"
 
     class Meta:
         ordering = ['enroll_time']
+        unique_together = ('student', 'class_obj')
 
 
 class Tag(models.Model):

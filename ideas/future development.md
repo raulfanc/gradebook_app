@@ -32,3 +32,6 @@
 10.  Feedback and communication:
     - Provide a built-in messaging system for communication between students, lecturers, and administrators.
     - Enable lecturers to provide feedback on assessments and track student progress over time.
+11.  Custom managers
+    - adding a custom manager for the Class model to encapsulate the enrollment and grade assignment logic.
+    - include methods for enrolling students, assigning grades, and calculating class statistics.
