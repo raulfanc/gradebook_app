@@ -39,5 +39,11 @@ March 27th 2023 @ 10:00pm
 django.core.exceptions.FieldError: 'enrollment_date' cannot be specified for Student model form as it is a non-editable field
 ```
 - error sorted by removing `enrollment_date` from `StudentForm` in forms.py
-- running `python manage.py makemigrations` again
-```terminal
+
+---
+March 28th 2023 @ 9:30am
+- no errors after repaired a few missing attributes in views.py
+- homepage is now working
+- `semester module` tested, add,update,delete,and view all working 
+- removed [obsidian settings](./.obsidian) from git remote, but keep it locally
+- removed [ideas](./ideas) from both remote repo and local.

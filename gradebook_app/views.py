@@ -17,9 +17,13 @@ views.py is working with forms.py and models.py to create the views for the admi
 """
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
 from .models import Semester, Course, Class, Lecturer, Student
 from .forms import SemesterForm, CourseForm, ClassForm, LecturerForm, StudentForm
+
+
+class HomePageView(TemplateView):
+    template_name = 'gradebook_app/home.html'
 
 
 # Semester views
@@ -99,6 +103,11 @@ class LecturerUpdateView(UpdateView):
     form_class = LecturerForm
 
 
+class LecturerDeleteView(DeleteView):
+    model = Lecturer
+    success_url = reverse_lazy('lecturer_list')
+
+
 # Student views
 class StudentListView(ListView):
     model = Student
@@ -111,6 +120,15 @@ class StudentDetailView(DetailView):
 class StudentCreateView(CreateView):
     model = Student
     form_class = StudentForm
+
+
+class StudentUpdateView(UpdateView):
+    model = Student
+    form_class = StudentForm
+
+class StudentDeleteView(DeleteView):
+    model = Student
+    success_url = reverse_lazy('student_list')
 
 
 # Views for administrators to manage semesters, courses, classes, lecturers, and students
@@ -181,3 +199,4 @@ class StudentViewMarksView(LoginRequiredMixin, DetailView):
     model = Student
     template_name = 'gradebook_app/student_view_marks.html'
     context_object_name = 'student'
+

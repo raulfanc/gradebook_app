@@ -1,4 +1,11 @@
-- [x] 1.  **Setup we environment**
+[demo](./demo) folder: project folder
+[gradebook_app](./gradebook_app) folder: app folder
+[Development Journal] is to record the development process
+[README.md] is to record the project progress, decisions, and other information.
+
+
+
+- [x] 1. **Setup we environment**
 - [x] -   Install Python (latest version)
 - [x] -   Install Django: 
 ```
@@ -25,24 +32,34 @@ git commit -m "Initial commit"
 ```
 
 ---
-==above step is for VS Code, if using PyCharm, create a project alongside an app.
+
+==above step is for VS Code, if using PyCharm, create a project alongside an app==
 
 - [x] 5.  **Set up Trello for the developer journal**
 - [x] -   Create a new board for the project
 - [x] -   Add lists for "To Do," "In Progress," and "Done"
 - [x] -   Add cards for each task in the assignment
 - [x] -   Move the cards as we progress through the project
+
 - [x] 6. set up postgreSQL with this project
+
 - [x] 7. upgraded pip with the my project python 3.10.6, `pip install --upgrade pip`
-- [x] 8. set up [[GitHub]] with PyCharm's VCS
+
+- [x] 8. set up [[GitHub]] with PyCharm's VC
+
 - [x] 9. Follow [[Data Grip]] to set up, this is similar to PgAdmin4, but more advanced.
+
 - [x] 10. Follow [[PostgreSQL]] set up 
+
 - [x] 11.  **Update README.md**
+
     - [x] -   Document the project progress, decisions, and other information in the README.md 
     - [x] -   Commit and push changes to GitHub regularly
     - [x] -  `sudo lsof -t -i tcp:8000` monitor port 8000, for example if 86597, then use `kill -9 86597`
 - [x] 12. **install django debug toolbar** [link](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html)
+
 - [x] 13. **install pylint-django** `pip install pylint-django`
+
 - [x] 14. **Create the Models (Part A)**
 - [x]  Refer to the class diagram and create models in **gradebook/models.py**
 - [x]  Make sure to add any necessary many-to-many relationships
@@ -53,23 +70,29 @@ git commit -m "Initial commit"
 - [x] In **gradebook_app/views.py**, create the necessary views for administrators, lecturers, and students
 - [x] Use Django's generic views and forms to handle CRUD operations
 - [x] Create view functions for each required task in the assignment, and make necessary adjustments
+
 - [x] 17. **Create Templates (Part C)**
 - [x] In **gradebook_app/templates/**, create the necessary templates for administrators, lecturers, and students
 - [x] Use template inheritance to reuse common components (e.g. header, footer)
 - [ ] Implement authentication checks using Django's built-in authentication system
+
 - [ ] 18. **Configure URLs**
-- [ ] In **gradebook_app/urls.py**, create URL patterns for each view function
 - [x] test views, view semesterListView.html and base.html
-- [ ] Include the app's URL patterns in the project's **urls.py**
+- [x] Include the app's URL patterns in the project's **urls.py**
+- [ ] In **gradebook_app/urls.py**, create URL patterns for each view function
+
 - [ ] 19. **Test the application**
 - [ ] Run **python manage.py runserver** and test the app in the browser
 - [ ] Make sure all features work as expected
+
 - [ ]  20. **Prepare for Deployment (Part D)**
 - [ ] Create **runtime.txt** with the required Python version
 - [ ] Create **requirements.txt** using **pip freeze > requirements.txt**
 - [ ] Commit and push changes to GitHub
+
 - [ ] 21. **Deploy to Doc hyper server**
 - [ ] Follow the instructions provided by Doc hyper to deploy the app
+
 - [ ] 22. **Update Trello and README.md**
 - [ ]  As you progress, move Trello cards to the appropriate lists
 - [x]  Regularly update README.md to document your work and decisions

@@ -1,0 +1,12 @@
+{% extends 'gradebook_app/base.html' %}
+
+{% block content %}
+    <h1>{{ semester }}</h1>
+    <p>Start date: {{ semester.start_date }}</p>
+    <p>End date: {{ semester.end_date }}</p>
+    <p>Year: {{ semester.year }}</p>
+
+    <p><a href="{% url 'semester_update' semester.pk %}">Edit</a></p>
+    <p><a href="{% url 'semester_delete' semester.pk %}">Delete</a></p>
+    <p><a href="{% url 'home' %}">Back to home</a></p>
+{% endblock %}

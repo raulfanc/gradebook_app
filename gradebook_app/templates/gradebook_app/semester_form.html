@@ -1,0 +1,11 @@
+{% extends 'gradebook_app/base.html' %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Edit Semester{% else %}Add Semester{% endif %}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <p><a href="{% url 'home' %}">Back to home</a></p>
+{% endblock %}
