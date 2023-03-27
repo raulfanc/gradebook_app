@@ -1,0 +1,15 @@
+{% extends 'gradebook_app/base.html' %}
+
+{% block title %}Semesters{% endblock %}
+
+{% block content %}
+    <h2>Semesters</h2>
+    <ul>
+    {% for semester in object_list %}
+        <li><a href="{% url 'semester_detail' semester.pk %}">{{ semester.name }}</a></li>
+    {% empty %}
+        <li>No semesters available</li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'semester_create' %}">Add a new semester</a>
+{% endblock %}

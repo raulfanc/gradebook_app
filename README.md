@@ -43,78 +43,37 @@ git commit -m "Initial commit"
     - [x] -  `sudo lsof -t -i tcp:8000` monitor port 8000, for example if 86597, then use `kill -9 86597`
 - [x] 12. **install django debug toolbar** [link](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html)
 - [x] 13. **install pylint-django** `pip install pylint-django`
-- [x] 13. **Create the Models (Part A)**
+- [x] 14. **Create the Models (Part A)**
 - [x]  Refer to the class diagram and create models in **gradebook/models.py**
 - [x]  Make sure to add any necessary many-to-many relationships
-- [ ]  Run **python manage.py makemigrations** and **python manage.py migrate** to apply the model changes
-- [ ]  test the models in the Django shell
-- [ ] 13. **Create Views (Part B)**
--   In **gradebook_app/views.py**, create the necessary views for administrators, lecturers, and students
--   Use Django's generic views and forms to handle CRUD operations
--   Create view functions for each required task in the assignment
-- [ ] 14. **Create Templates (Part C)**
--   In **gradebook_app/templates/**, create the necessary templates for administrators, lecturers, and students
--   Use template inheritance to reuse common components (e.g. header, footer)
--   Implement authentication checks using Django's built-in authentication system
-- [ ] 15. **Configure URLs**
--   In **gradebook_app/urls.py**, create URL patterns for each view function
--   Include the app's URL patterns in the project's **urls.py**
-- [ ] 16. **Test we application**
--   Run **python manage.py runserver** and test we app in we browser
--   Make sure all features work as expected
-- [ ] 17. **Prepare for Deployment (Part D)**
--   Create **runtime.txt** with the required Python version
--   Create **requirements.txt** using **pip freeze > requirements.txt**
--   Commit and push changes to GitHub
-- [ ] 18. **Deploy to Doc hyper server**
--   Follow the instructions provided by Doc hyper to deploy we app
-- [ ] 19. **Update Trello and README.md**
--   As we progress, move Trello cards to the appropriate lists
--   Regularly update README.md to document we work and decisions
--   Commit and push changes to GitHub
-
-
----
-
-1. 
-2.  **Create the Models (Part A)**
-    
-    -   Refer to the class diagram and create models in `gradebook_app/models.py`
-    -   Make sure to add any necessary many-to-many relationships
-    -   Run `python manage.py makemigrations` and `python manage.py migrate` to apply the model changes
-3.  **Create Views (Part B)**
-    
-    -   In `gradebook_app/views.py`, create the necessary views for administrators, lecturers, and students
-    -   Use Django's generic views and forms to handle CRUD operations
-    -   Create view functions for each required task in the assignment
-4.  **Create Templates (Part C)**
-    
-    -   In `gradebook_app/templates/`, create the necessary templates for administrators, lecturers, and students
-    -   Use template inheritance to reuse common components (e.g., header, footer)
-    -   Implement authentication checks using Django's built-in authentication system
-5.  **Configure URLs**
-    
-    -   In `gradebook_app/urls.py`, create URL patterns for each view function
-    -   Include the app's URL patterns in the project's `urls.py`
-6.  **Test the web application**
-    
-    -   Run `python manage.py runserver` and test your app in your browser
-    -   Make sure all features work as expected
-7.  **Prepare for Deployment (Part D)**
-    
-    -   Create `runtime.txt` with the required Python version
-    -   Create `requirements.txt` using `pip freeze > requirements.txt`
-    -   Commit and push changes to GitHub
-8.  **Deploy to Doc hyper server**
-    
-    -   Follow the instructions provided by Doc hyper to deploy your app
-9.  **Update Trello and README.md**
-    
-    -   As you progress, move Trello cards to the appropriate lists
-    -   Regularly update README.md to document your work and decisions
-    -   Commit and push changes to GitHub
-
-
+![[ERD.png]]
+- [x]  Run **python manage.py makemigrations** and **python manage.py migrate** to apply the model changes
+- [x]  test the models in the Django shell 
+- [x] **Create Views (Part B)** - Generic Views
+- [x] In **gradebook_app/views.py**, create the necessary views for administrators, lecturers, and students
+- [x] Use Django's generic views and forms to handle CRUD operations
+- [x] Create view functions for each required task in the assignment, and make necessary adjustments
+- [x] 17. **Create Templates (Part C)**
+- [x] In **gradebook_app/templates/**, create the necessary templates for administrators, lecturers, and students
+- [x] Use template inheritance to reuse common components (e.g. header, footer)
+- [ ] Implement authentication checks using Django's built-in authentication system
+- [ ] 18. **Configure URLs**
+- [ ] In **gradebook_app/urls.py**, create URL patterns for each view function
+- [x] test views, view semesterListView.html and base.html
+- [ ] Include the app's URL patterns in the project's **urls.py**
+- [ ] 19. **Test the application**
+- [ ] Run **python manage.py runserver** and test the app in the browser
+- [ ] Make sure all features work as expected
+- [ ]  20. **Prepare for Deployment (Part D)**
+- [ ] Create **runtime.txt** with the required Python version
+- [ ] Create **requirements.txt** using **pip freeze > requirements.txt**
+- [ ] Commit and push changes to GitHub
+- [ ] 21. **Deploy to Doc hyper server**
+- [ ] Follow the instructions provided by Doc hyper to deploy the app
+- [ ] 22. **Update Trello and README.md**
+- [ ]  As you progress, move Trello cards to the appropriate lists
+- [x]  Regularly update README.md to document your work and decisions
+- [x]  Commit and push changes to GitHub
 
 ---
 

@@ -34,4 +34,6 @@ class LecturerForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['user', 'enrollment_date', 'StudentID', 'firstname', 'lastname', 'email', 'DOB']
+        fields = ['user', 'StudentID', 'firstname', 'lastname', 'email', 'DOB']
+
+

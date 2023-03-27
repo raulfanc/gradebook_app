@@ -19,7 +19,7 @@ class Semester(models.Model):
 
 class Course(models.Model):
     title = models.CharField(max_length=100)
-    code = models.SlugField(max_length=10, unique=True),
+    code = models.SlugField(max_length=10, unique=True)
     description = models.TextField(blank=True)
     tags = models.ManyToManyField('Tag')
 

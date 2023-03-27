@@ -1,5 +1,4 @@
 """
-according to models.py, we need the following views:
 View for the administrator to create/update/delete/show semesters.
 View for the administrator to create/update/delete/show courses (including tags management).
 View for the administrator to create/update/delete/show classes.
@@ -13,149 +12,172 @@ View for the lecturer to log in to the gradebook.
 View for the lecturer to enter students' marks in the gradebook.
 View for the student to log in to the gradebook.
 View for the students to view their marks in the gradebook.
+
+views.py is working with forms.py and models.py to create the views for the administrator and the lecturer.
 """
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+from .models import Semester, Course, Class, Lecturer, Student
+from .forms import SemesterForm, CourseForm, ClassForm, LecturerForm, StudentForm
 
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
-from .models import *
+# Semester views
+class SemesterListView(ListView):
+    model = Semester
 
-# Create your views here.
-# use generic views
-# https://docs.djangoproject.com/en/3.0/topics/class-based-views/generic-display/
 
-def index(request):
-    return render(request, 'gradebook_app/index.html')
+class SemesterDetailView(DetailView):
+    model = Semester
 
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('index')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'gradebook_app/login.html', {'form': form})
 
-def logout_view(request):
-    logout(request)
-    return redirect('index')
+class SemesterCreateView(CreateView):
+    model = Semester
+    form_class = SemesterForm
 
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('index')
-    else:
-        form = UserCreationForm()
-    return render(request, 'gradebook_app/register.html', {'form': form})
 
-def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(data=request.POST, user=request.user)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            return redirect('index')
-    else:
-        form = PasswordChangeForm(user=request.user)
-    return render(request, 'gradebook_app/change_password.html', {'form': form})
+class SemesterUpdateView(UpdateView):
+    model = Semester
+    form_class = SemesterForm
 
-def semester_list(request):
-    semesters = Semester.objects.all()
-    return render(request, 'gradebook_app/semester_list.html', {'semesters': semesters})
 
-def semester_detail(request, pk):
-    semester = Semester.objects.get(pk=pk)
-    return render(request, 'gradebook_app/semester_detail.html', {'semester': semester})
+class SemesterDeleteView(DeleteView):
+    model = Semester
+    success_url = reverse_lazy('semester_list')
 
-def semester_create(request):
-    if request.method == 'POST':
-        semester_form = SemesterForm(request.POST)
-        if semester_form.is_valid():
-            semester_form.save()
-            return redirect('semester_list')
-    else:
-        semester_form = SemesterForm()
-    return render(request, 'gradebook_app/semester_create.html', {'semester_form': semester_form})
 
-def semester_update(request, pk):
-    semester = Semester.objects.get(pk=pk)
-    if request.method == 'POST':
-        semester_form = SemesterForm(request.POST, instance=semester)
-        if semester_form.is_valid():
-            semester_form.save()
-            return redirect('semester_list')
-    else:
-        semester_form = SemesterForm(instance=semester)
-    return render(request, 'gradebook_app/semester_update.html', {'semester_form': semester_form})
+# Course views
+class CourseDetailView(DetailView):
+    model = Course
 
-def semester_delete(request, pk):
-    semester = Semester.objects.get(pk=pk)
-    semester.delete()
-    return redirect('semester_list')
 
-def course_list(request):
-    courses = Course.objects.all()
-    return render(request, 'gradebook_app/course_list.html', {'courses': courses})
+class CourseCreateView(CreateView):
+    model = Course
+    form_class = CourseForm
 
-def course_detail(request, pk):
-    course = Course.objects.get(pk=pk)
-    return render(request, 'gradebook_app/course_detail.html', {'course': course})
 
-def course_create(request):
-    if request.method == 'POST':
-        course_form = CourseForm(request.POST)
-        if course_form.is_valid():
-            course_form.save()
-            return redirect('course_list')
-    else:
-        course_form = CourseForm()
-    return render(request, 'gradebook_app/course_create.html', {'course_form': course_form})
+class CourseUpdateView(UpdateView):
+    model = Course
+    form_class = CourseForm
 
-def course_update(request, pk):
-    course = Course.objects.get(pk=pk)
-    if request.method == 'POST':
-        course_form = CourseForm(request.POST, instance=course)
-        if course_form.is_valid():
-            course_form.save()
-            return redirect('course_list')
-    else:
-        course_form = CourseForm(instance=course)
-    return render(request, 'gradebook_app/course_update.html', {'course_form': course_form})
 
-def course_delete(request, pk):
-    course = Course.objects.get(pk=pk)
-    course.delete()
-    return redirect('course_list')
+# Class views
+class ClassListView(ListView):
+    model = Class
 
-def class_list(request):
-    classes = Class.objects.all()
-    return render(request, 'gradebook_app/class_list.html', {'classes': classes})
 
-def class_detail(request, pk):
-    class_ = Class.objects.get(pk=pk)
-    return render(request, 'gradebook_app/class_detail.html', {'class_': class_})
+class ClassDetailView(DetailView):
+    model = Class
 
-def class_create(request):
-    if request.method == 'POST':
-        class_form = ClassForm(request.POST)
-        if class_form.is_valid():
-            class_form.save()
-            return redirect('class_list')
+
+class ClassCreateView(CreateView):
+    model = Class
+    form_class = ClassForm
+
+
+class ClassUpdateView(UpdateView):
+    model = Class
+    form_class = ClassForm
+
+
+# Lecturer views
+class LecturerListView(ListView):
+    model = Lecturer
+
+
+class LecturerDetailView(DetailView):
+    model = Lecturer
+
+
+class LecturerCreateView(CreateView):
+    model = Lecturer
+    form_class = LecturerForm
+
+
+class LecturerUpdateView(UpdateView):
+    model = Lecturer
+    form_class = LecturerForm
+
+
+# Student views
+class StudentListView(ListView):
+    model = Student
+
+
+class StudentDetailView(DetailView):
+    model = Student
+
+
+class StudentCreateView(CreateView):
+    model = Student
+    form_class = StudentForm
+
+
+# Views for administrators to manage semesters, courses, classes, lecturers, and students
+# ... (Similar to the basic views provided in the previous response)
+
+# View for assigning/removing/changing/showing a lecturer to a class
+class AssignLecturerView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+    permission_required = 'gradebook_app.change_class'
+    form_class = ClassForm
+    template_name = 'gradebook_app/assign_lecturer.html'
+
+    def form_valid(self, form):
+        class_obj = Class.objects.get(id=self.kwargs['pk'])
+        class_obj.lecturer = form.cleaned_data['lecturer']
+        class_obj.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('class_detail', args=[self.kwargs['pk']])
+
+
+# View for enrolling/removing/showing students in classes
+class EnrollStudentsView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+    permission_required = 'gradebook_app.change_enrollment'
+    form_class = StudentForm
+    template_name = 'gradebook_app/enroll_students.html'
+
+    def form_valid(self, form):
+        class_obj = Class.objects.get(id=self.kwargs['pk'])
+        student = form.cleaned_data['student']
+        enrollment = Enrollment(student=student, class_obj=class_obj)
+        enrollment.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('class_detail', args=[self.kwargs['pk']])
+
+
+# View for uploading students from excel files
+class UploadStudentsView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+    permission_required = 'gradebook_app.add_student'
+    # Implement file uploading, use third-party libraries like openpyxl or pandas
+    # to read the excel file and create Student instances
+    # ...
+
+
+# View for emailing students when their marks are ready
+class EmailMarksView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+    permission_required = 'gradebook_app.email_students'
+    # Implement emailing students using Django's built-in email support
+    # ...
+
+
+# Views for lecturer and student gradebook login
+# Use Django's built-in authentication views to handle lecturer and student logins
+# ...
+
+
+# View for lecturers to enter students' marks in the gradebook
+class LecturerEnterMarksView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+    permission_required = 'gradebook_app.change_enrollment'
+    # Implement form handling for entering student marks
+    # ...
+
+
+# View for students to view their marks in the gradebook
+class StudentViewMarksView(LoginRequiredMixin, DetailView):
+    model = Student
+    template_name = 'gradebook_app/student_view_marks.html'
+    context_object_name = 'student'
