@@ -1,18 +1,24 @@
 {% load static %}
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Gradebook{% endblock %}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradebook App</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <div id="header">
-        <h1>Gradebook</h1>
+    <header>
+        <div class="container">
+            <h1>Gradebook App</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
     </div>
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
+
 </body>
 </html>

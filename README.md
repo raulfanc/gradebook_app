@@ -1,9 +1,10 @@
-[demo](./demo) folder: project folder
-[gradebook_app](./gradebook_app) folder: app folder
-[Development Journal] is to record the development process
-[README.md] is to record the project progress, decisions, and other information.
+[demo](./demo) folder: project folder.
 
+[gradebook_app](./gradebook_app) folder: app folder.
 
+[Development Journal](Developer%20Journal.md) is to record the development process.
+
+---
 
 - [x] 1. **Setup we environment**
 - [x] -   Install Python (latest version)
@@ -111,3 +112,11 @@ ERD
 - Django REST API
 1. Generic class (UTIL?) avoid repeated coding, like a template class
 2. security things to do at the end
+
+--- 
+### Github
+use git branches to manage the project (wont mess with the master branch)
+- master branch: for production (working code here)
+- test branch: for testing (optional)
+- develop branch: for development
+- feature branch: for each feature (e.g. name is like feature/xxxx)
