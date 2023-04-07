@@ -69,3 +69,8 @@ p {
     line-height: 1.6;
     margin-bottom: 20px;
 }
+
+.errorlist {
+    color: red;
+    font-weight: bold;
+}

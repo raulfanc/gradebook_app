@@ -47,3 +47,13 @@ March 28th 2023 @ 9:30am
 - `semester module` tested, add,update,delete,and view all working 
 - removed [obsidian settings](./.obsidian) from git remote, but keep it locally
 - removed [ideas](./ideas) from both remote repo and local.
+
+---
+Apr 07th 2023 @17:00pm
+#### Authentication development
+- users and user group
+- authentication is added only show operations to `authenticated users`
+- function based `user registration`
+- built-in implementation for login and logout
+- newly registered user has to update their information before moving forward
+- updated forms.py and views.py, and registration folder for login, logout, and user_update_info

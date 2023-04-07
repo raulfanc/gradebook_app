@@ -19,7 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
 from .models import Semester, Course, Class, Lecturer, Student
-from .forms import SemesterForm, CourseForm, ClassForm, LecturerForm, StudentForm
+from .forms import *
 
 
 class HomePageView(TemplateView):
@@ -51,6 +51,9 @@ class SemesterDeleteView(DeleteView):
 
 
 # Course views
+class CourseListView(ListView):
+    model = Course
+
 class CourseDetailView(DetailView):
     model = Course
 
@@ -131,6 +134,36 @@ class StudentDeleteView(DeleteView):
     success_url = reverse_lazy('student_list')
 
 
+# Views for authentication's register
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('update_user_info')  # Redirect to the update_user_info view
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+
+
+def update_user_info(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'registration/update_user_info.html', {'form': form})
+
+
 # Views for administrators to manage semesters, courses, classes, lecturers, and students
 # ... (Similar to the basic views provided in the previous response)
 
@@ -199,4 +232,3 @@ class StudentViewMarksView(LoginRequiredMixin, DetailView):
     model = Student
     template_name = 'gradebook_app/student_view_marks.html'
     context_object_name = 'student'
-
