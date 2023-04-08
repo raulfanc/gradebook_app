@@ -3,8 +3,8 @@
 - Web Application for management of grades and marks of students for a School/University.
 - Implemented using Django framework along with PostgreSQL database.
 - A simple development cycle with stages including Documentation, Designing, Coding, Testing and Improvement was practiced.
-- to meet the requirements of [assignment](./Documents/7420_S1_2023_Assignment_1.pdf), I made a [checklist](./Documents/Checklist) to tick off once developed.
-- [Developer Journal](./Documents/Developer_Journal) to record the learning and development progress.
+- to meet the requirements of [assignment](./Documents/7420_S1_2023_Assignment_1.pdf), I made a [checklist](./Documents/Checklist.md) to tick off once developed.
+- [Developer Journal](./Documents/Developer_Journal.md) to record the learning and development progress.
 
 
 ## Troubleshot
@@ -20,12 +20,12 @@ sudo lsof -t -i tcp:8000
 - [x] upgraded pip with the my project python 3.10.6, `pip install --upgrade pip`
 - [x] set up [GitHub](https://www.jetbrains.com/help/pycharm/github.html#register-existing-account) with PyCharm's VCS
 - [x] Follow [Data Grip](Data_Grip.md) to set up, this is similar to PgAdmin4, but more advanced.
-- [x] Follow [PostgreSQL](./Documents/PostgreSQL_Setup) set up 
+- [x] Follow [PostgreSQL](./Documents/PostgreSQL_Setup.md) set up 
 - [x] store confidental in `.env` and add it to `.gitignore`, [guide](Environment_Variables.md)
 - [x] **install django debug toolbar** [link](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html)
 - [x] **install pylint-django** `pip install pylint-django`
 
-==above is for Pycharm, also can set up with== [VS Code](./Documents/VSCode_Setup)
+==above is for Pycharm, also can set up with== [VS Code](./Documents/VSCode_Setup.md)
 
 ---
 ## Base function development
