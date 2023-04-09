@@ -9,7 +9,7 @@
                 {{ field.label_tag }}
                 {{ field }}
                 {% if field.errors %}
-                    <ul class="errorlist">
+                    <ul class="errors">
                         {% for error in field.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}

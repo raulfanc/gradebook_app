@@ -4,10 +4,9 @@ Tag model can be handled by Django's built-in ManyToManyField 'Course' model.
 """
 
 from django.forms import DateInput
-from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import EmailValidator, RegexValidator
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 from .models import Semester, Course, Class, Lecturer, Student
 
@@ -73,6 +72,7 @@ class UserUpdateForm(forms.ModelForm):
         validators=[RegexValidator(r'^[a-zA-Z]+$', 'Enter a valid last name (letters only)')]
     )
     email = forms.EmailField(required=True, validators=[EmailValidator()])
+    group = forms.ModelChoiceField(queryset=Group.objects.filter(name__in=['student', 'lecturer']), required=True)
 
     class Meta:
         model = User
