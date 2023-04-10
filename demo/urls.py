@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -24,5 +23,4 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('', include('gradebook_app.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-
 ]

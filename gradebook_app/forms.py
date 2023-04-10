@@ -1,6 +1,5 @@
 """
 Enrollment model can be handled by Django's built-in ManyToManyField `Student` and `Class` models.
-Tag model can be handled by Django's built-in ManyToManyField 'Course' model.
 """
 
 from django.forms import DateInput
@@ -40,7 +39,7 @@ class SemesterForm(forms.ModelForm):
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ['title', 'code', 'description', 'tags']
+        fields = ['title', 'code', 'description']
 
 
 class ClassForm(forms.ModelForm):
@@ -79,4 +78,15 @@ class UserUpdateForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email')
 
 
+# used views.py, EnrolmentForm is used to enrol a Lecturer into a class
+class EnrolmentForm(forms.ModelForm):
+    class Meta:
+        model = Class
+        fields = ['lecturer']
 
+
+# used views.py, EnrolmentStudentForm is used to enrol a Student into a class
+class EnrolmentStudentForm(forms.ModelForm):
+    class Meta:
+        model = Class
+        fields = ['students']

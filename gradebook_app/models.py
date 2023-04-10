@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+# ==================Base Models==================
 
-# Create your models here.
+
 class Semester(models.Model):
     name = models.CharField(max_length=100, verbose_name="Semester Name", help_text="Enter the name of the semester")
     start_date = models.DateField()
@@ -24,7 +25,7 @@ class Course(models.Model):
     title = models.CharField(max_length=100)
     code = models.SlugField(max_length=10, unique=True)
     description = models.TextField(blank=True)
-    tags = models.ManyToManyField('Tag')
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE, related_name='courses')
 
     def __str__(self):
         return self.title
@@ -52,7 +53,7 @@ class Lecturer(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    enrollment_date = models.DateField(auto_now_add=True)
+    enrolment_date = models.DateField(auto_now_add=True)
     StudentID = models.CharField(max_length=10)
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
@@ -71,7 +72,7 @@ class Class(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="classes")
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
-    students = models.ManyToManyField(Student, through='Enrollment')
+    students = models.ManyToManyField(Student, through='Enrolment')
     class_code = models.CharField(max_length=20, unique=True)
     schedule = models.TextField(blank=True)
 
@@ -82,7 +83,10 @@ class Class(models.Model):
         ordering = ['course', 'class_code']
 
 
-class Enrollment(models.Model):
+# ==============end of Base Models=============
+
+
+class Enrolment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     grade = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
@@ -96,12 +100,3 @@ class Enrollment(models.Model):
         ordering = ['enroll_time']
         unique_together = ('student', 'class_obj')
 
-
-class Tag(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']

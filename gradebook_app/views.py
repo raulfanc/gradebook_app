@@ -1,10 +1,4 @@
 """
-View for the administrator to create/update/delete/show semesters.
-View for the administrator to create/update/delete/show courses (including tags management).
-View for the administrator to create/update/delete/show classes.
-View for the administrator to create/update/delete/show lecturers.
-View for the administrator to assign/remove/change/show lecturers to a class.
-View for the administrator to create/update/delete/show students (including student profiles).
 View for the administrator to enroll/remove/show students in classes.
 View for the administrator to upload students from excel files to the website.
 View for the system to email students when their marks are ready.
@@ -18,7 +12,7 @@ views.py is working with forms.py and models.py to create the views for the admi
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
-from .models import Semester, Course, Class, Lecturer, Student
+from .models import *
 from .forms import *
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -30,7 +24,7 @@ class HomePageView(TemplateView):
     template_name = 'gradebook_app/home.html'
 
 
-# Semester views
+#=====administrator to create/update/delete/show semesters========
 class SemesterListView(ListView):
     model = Semester
 
@@ -52,9 +46,9 @@ class SemesterUpdateView(UpdateView):
 class SemesterDeleteView(DeleteView):
     model = Semester
     success_url = reverse_lazy('semester_list')
+#=============================end====================================
 
-
-# Course views
+#==========administrator to create/update/delete/show courses========
 class CourseListView(ListView):
     model = Course
 
@@ -70,9 +64,10 @@ class CourseCreateView(CreateView):
 class CourseUpdateView(UpdateView):
     model = Course
     form_class = CourseForm
+#===========================end======================================
 
 
-# Class views
+#==========administrator to create/update/delete/show classes========
 class ClassListView(ListView):
     model = Class
 
@@ -89,9 +84,10 @@ class ClassCreateView(CreateView):
 class ClassUpdateView(UpdateView):
     model = Class
     form_class = ClassForm
+#===========================end========================================
 
 
-# Lecturer views
+#==========administrator to create/update/delete/show lecturers========
 class LecturerListView(ListView):
     model = Lecturer
 
@@ -113,9 +109,10 @@ class LecturerUpdateView(UpdateView):
 class LecturerDeleteView(DeleteView):
     model = Lecturer
     success_url = reverse_lazy('lecturer_list')
+#===========================end=======================================
 
 
-# Student views
+#==========administrator to create/update/delete/show students========
 class StudentListView(ListView):
     model = Student
 
@@ -136,7 +133,57 @@ class StudentUpdateView(UpdateView):
 class StudentDeleteView(DeleteView):
     model = Student
     success_url = reverse_lazy('student_list')
+#===========================end=============================================
 
+
+#======administrator to assign/remove/change/show lecturers to a class======
+class EnrolmentListView(ListView):
+    model = Enrolment
+
+
+class EnrolmentDetailView(DetailView):
+        model = Enrolment
+
+
+class EnrolmentCreateView(CreateView):
+    model = Enrolment
+    form_class = EnrolmentForm
+
+
+class EnrolmentUpdateView(UpdateView):
+    model = Enrolment
+    form_class = EnrolmentForm
+
+
+class EnrolmentDeleteView(DeleteView):
+    model = Enrolment
+    success_url = reverse_lazy('enrolment_list')
+#===============================end============================================
+
+
+# ======administrator to enroll/remove/show students in classes================
+class EnrolmentStudentListView(ListView):
+    model = Enrolment
+
+
+class EnrolmentStudentDetailView(DetailView):
+    model = Enrolment
+
+
+class EnrolmentStudentCreateView(CreateView):
+    model = Enrolment
+    form_class = EnrolmentStudentForm
+
+
+class EnrolmentStudentUpdateView(UpdateView):
+    model = Enrolment
+    form_class = EnrolmentStudentForm
+
+
+class EnrolmentStudentDeleteView(DeleteView):
+    model = Enrolment
+    success_url = reverse_lazy('enrolment_student_list')
+#===============================end==========================================
 
 # Views for authentication's register
 def register(request):
@@ -181,3 +228,5 @@ def update_user_info(request):
     else:
         form = UserUpdateForm(instance=request.user)
     return render(request, 'registration/update_user_info.html', {'form': form})
+
+
