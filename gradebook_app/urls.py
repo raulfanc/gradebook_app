@@ -3,6 +3,9 @@ from . import views
 
 urlpatterns = [
     path('', views.HomePageView.as_view(), name='home'),
+    path('accounts/register/', views.register, name='register'),
+    path('accounts/update_user_info/', views.update_user_info, name='update_user_info'),
+
     # Semester URLs
     path('semesters/', views.SemesterListView.as_view(), name='semester_list'),
     path('semesters/<int:pk>/', views.SemesterDetailView.as_view(), name='semester_detail'),
@@ -11,6 +14,7 @@ urlpatterns = [
     path('semesters/<int:pk>/delete/', views.SemesterDeleteView.as_view(), name='semester_delete'),
 
     # Course URLs
+    path('courses/', views.CourseListView.as_view(), name='course_list'),
     path('courses/<int:pk>/', views.CourseDetailView.as_view(), name='course_detail'),
     path('courses/add/', views.CourseCreateView.as_view(), name='course_create'),
     path('courses/<int:pk>/edit/', views.CourseUpdateView.as_view(), name='course_update'),
@@ -35,11 +39,4 @@ urlpatterns = [
     path('students/<int:pk>/edit/', views.StudentUpdateView.as_view(), name='student_update'),
     path('students/<int:pk>/delete/', views.StudentDeleteView.as_view(), name='student_delete'),
 
-    # Assign lecturer to a class
-    path('classes/<int:pk>/assign-lecturer/', views.AssignLecturerView.as_view(), name='assign_lecturer'),
-
-    # Enroll students in a class
-    path('classes/<int:pk>/enroll-students/', views.EnrollStudentsView.as_view(), name='enroll_students'),
-
 ]
-

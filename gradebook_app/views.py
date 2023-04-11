@@ -1,10 +1,4 @@
 """
-View for the administrator to create/update/delete/show semesters.
-View for the administrator to create/update/delete/show courses (including tags management).
-View for the administrator to create/update/delete/show classes.
-View for the administrator to create/update/delete/show lecturers.
-View for the administrator to assign/remove/change/show lecturers to a class.
-View for the administrator to create/update/delete/show students (including student profiles).
 View for the administrator to enroll/remove/show students in classes.
 View for the administrator to upload students from excel files to the website.
 View for the system to email students when their marks are ready.
@@ -18,15 +12,19 @@ views.py is working with forms.py and models.py to create the views for the admi
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
-from .models import Semester, Course, Class, Lecturer, Student
-from .forms import SemesterForm, CourseForm, ClassForm, LecturerForm, StudentForm
+from .models import *
+from .forms import *
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 
 class HomePageView(TemplateView):
     template_name = 'gradebook_app/home.html'
 
 
-# Semester views
+#=====administrator to create/update/delete/show semesters========
 class SemesterListView(ListView):
     model = Semester
 
@@ -48,9 +46,12 @@ class SemesterUpdateView(UpdateView):
 class SemesterDeleteView(DeleteView):
     model = Semester
     success_url = reverse_lazy('semester_list')
+#=============================end====================================
 
+#==========administrator to create/update/delete/show courses========
+class CourseListView(ListView):
+    model = Course
 
-# Course views
 class CourseDetailView(DetailView):
     model = Course
 
@@ -63,9 +64,10 @@ class CourseCreateView(CreateView):
 class CourseUpdateView(UpdateView):
     model = Course
     form_class = CourseForm
+#===========================end======================================
 
 
-# Class views
+#==========administrator to create/update/delete/show classes========
 class ClassListView(ListView):
     model = Class
 
@@ -82,9 +84,10 @@ class ClassCreateView(CreateView):
 class ClassUpdateView(UpdateView):
     model = Class
     form_class = ClassForm
+#===========================end========================================
 
 
-# Lecturer views
+#==========administrator to create/update/delete/show lecturers========
 class LecturerListView(ListView):
     model = Lecturer
 
@@ -106,9 +109,10 @@ class LecturerUpdateView(UpdateView):
 class LecturerDeleteView(DeleteView):
     model = Lecturer
     success_url = reverse_lazy('lecturer_list')
+#===========================end=======================================
 
 
-# Student views
+#==========administrator to create/update/delete/show students========
 class StudentListView(ListView):
     model = Student
 
@@ -129,74 +133,100 @@ class StudentUpdateView(UpdateView):
 class StudentDeleteView(DeleteView):
     model = Student
     success_url = reverse_lazy('student_list')
+#===========================end=============================================
 
 
-# Views for administrators to manage semesters, courses, classes, lecturers, and students
-# ... (Similar to the basic views provided in the previous response)
-
-# View for assigning/removing/changing/showing a lecturer to a class
-class AssignLecturerView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
-    permission_required = 'gradebook_app.change_class'
-    form_class = ClassForm
-    template_name = 'gradebook_app/assign_lecturer.html'
-
-    def form_valid(self, form):
-        class_obj = Class.objects.get(id=self.kwargs['pk'])
-        class_obj.lecturer = form.cleaned_data['lecturer']
-        class_obj.save()
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('class_detail', args=[self.kwargs['pk']])
+#======administrator to assign/remove/change/show lecturers to a class======
+class EnrolmentListView(ListView):
+    model = Enrolment
 
 
-# View for enrolling/removing/showing students in classes
-class EnrollStudentsView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
-    permission_required = 'gradebook_app.change_enrollment'
-    form_class = StudentForm
-    template_name = 'gradebook_app/enroll_students.html'
-
-    def form_valid(self, form):
-        class_obj = Class.objects.get(id=self.kwargs['pk'])
-        student = form.cleaned_data['student']
-        enrollment = Enrollment(student=student, class_obj=class_obj)
-        enrollment.save()
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('class_detail', args=[self.kwargs['pk']])
+class EnrolmentDetailView(DetailView):
+        model = Enrolment
 
 
-# View for uploading students from excel files
-class UploadStudentsView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
-    permission_required = 'gradebook_app.add_student'
-    # Implement file uploading, use third-party libraries like openpyxl or pandas
-    # to read the excel file and create Student instances
-    # ...
+class EnrolmentCreateView(CreateView):
+    model = Enrolment
+    form_class = EnrolmentForm
 
 
-# View for emailing students when their marks are ready
-class EmailMarksView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
-    permission_required = 'gradebook_app.email_students'
-    # Implement emailing students using Django's built-in email support
-    # ...
+class EnrolmentUpdateView(UpdateView):
+    model = Enrolment
+    form_class = EnrolmentForm
 
 
-# Views for lecturer and student gradebook login
-# Use Django's built-in authentication views to handle lecturer and student logins
-# ...
+class EnrolmentDeleteView(DeleteView):
+    model = Enrolment
+    success_url = reverse_lazy('enrolment_list')
+#===============================end============================================
 
 
-# View for lecturers to enter students' marks in the gradebook
-class LecturerEnterMarksView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
-    permission_required = 'gradebook_app.change_enrollment'
-    # Implement form handling for entering student marks
-    # ...
+# ======administrator to enroll/remove/show students in classes================
+class EnrolmentStudentListView(ListView):
+    model = Enrolment
 
 
-# View for students to view their marks in the gradebook
-class StudentViewMarksView(LoginRequiredMixin, DetailView):
-    model = Student
-    template_name = 'gradebook_app/student_view_marks.html'
-    context_object_name = 'student'
+class EnrolmentStudentDetailView(DetailView):
+    model = Enrolment
+
+
+class EnrolmentStudentCreateView(CreateView):
+    model = Enrolment
+    form_class = EnrolmentStudentForm
+
+
+class EnrolmentStudentUpdateView(UpdateView):
+    model = Enrolment
+    form_class = EnrolmentStudentForm
+
+
+class EnrolmentStudentDeleteView(DeleteView):
+    model = Enrolment
+    success_url = reverse_lazy('enrolment_student_list')
+#===============================end==========================================
+
+# Views for authentication's register
+def register(request):
+    """
+    Create a view that allows users to register
+    :param request: the request sent to the server
+    :return: If the request method is GET, returns a blank registration form.
+             If the request method is POST and the form is valid, creates a new user, logs the user in,
+             and redirects them to the update_user_info page to complete their profile.
+    """
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('update_user_info')  # Redirect to the update_user_info view
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+
+@login_required
+def update_user_info(request):
+    """
+    A view that allows registered users to update their personal information.
+    If the request method is POST, the function creates a UserUpdateForm instance with the data from the request,
+    and checks if it's valid. If the form is valid, it saves the changes to the user's information and redirects
+    the user to the 'home' page.
+    If the request method is GET, the function creates a UserUpdateForm instance with the current user's information,
+    it is used to display the form with the user's current information for the first time the page is loaded.
+    :param request: The HTTP request object.
+    :return: A rendered HTML response containing a UserUpdateForm.
+    """
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            group = form.cleaned_data.get('group')
+            user.groups.set([group])  # Set the selected group
+            user.save()
+            return redirect('home')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'registration/update_user_info.html', {'form': form})
+
 
