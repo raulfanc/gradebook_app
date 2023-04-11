@@ -63,7 +63,7 @@ Not Sorted:
 - from 'Class', admin can assign, change, view 'Lecturers' , BUT cannot delete
 - from 'Enrolment', admin can enrol 'Student' to 'Class', BUT cannot show & remove a list of Student.
 
----
+---git brachnch -a
 
 Apr 11 2023 @ 16:00pm - Enrolment, models.py, admin.py
 - Fixed yesterday's remaining issues, now can show a list of students in a class, and can remove a student from a class.
