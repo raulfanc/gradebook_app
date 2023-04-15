@@ -3,20 +3,35 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+
+
 # ==================Base Models==================
 
 
 class Semester(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Semester Name", help_text="Enter the name of the semester")
+    SEMESTER_CHOICES = (
+        (1, 'Semester 1'),
+        (2, 'Semester 2'),
+    )
     start_date = models.DateField()
     end_date = models.DateField()
-    year = models.IntegerField()
+    semester_number = models.IntegerField(choices=SEMESTER_CHOICES, default=1)
+
+    def save(self, *args, **kwargs):
+        if 1 <= self.start_date.month <= 6:
+            self.semester_number = 1
+        else:
+            self.semester_number = 2
+
+        if self.semester_number == 1:
+            self.name = f"Semester 1 {self.start_date.year}"
+        elif self.semester_number == 2:
+            self.name = f"Semester 2 {self.start_date.year}"
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.name} {self.year}"
-
-    class Meta:
-        ordering = ['-year', 'name']
+        return self.name
 
     def get_absolute_url(self):
         return reverse('semester_detail', args=[str(self.id)])
@@ -26,7 +41,7 @@ class Course(models.Model):
     title = models.CharField(max_length=100)
     code = models.SlugField(max_length=10, unique=True)
     description = models.TextField(blank=True)
-    semester = models.ForeignKey(Semester, on_delete=models.CASCADE, related_name='courses')
+    semesters = models.ManyToManyField(Semester, related_name='courses')
 
     def __str__(self):
         return self.title
@@ -113,4 +128,3 @@ class Enrolment(models.Model):
 
     def __str__(self):
         return f"{self.student} - {self.enrolled_class}"
-
