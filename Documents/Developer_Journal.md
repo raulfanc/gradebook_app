@@ -63,7 +63,7 @@ Not Sorted:
 - from 'Class', admin can assign, change, view 'Lecturers' , BUT cannot delete
 - from 'Enrolment', admin can enrol 'Student' to 'Class', BUT cannot show & remove a list of Student.
 
----git brachnch -a
+---
 
 Apr 11 2023 @ 16:00pm - Enrolment, models.py, admin.py
 - Fixed yesterday's remaining issues, now can show a list of students in a class, and can remove a student from a class.
@@ -71,9 +71,17 @@ Apr 11 2023 @ 16:00pm - Enrolment, models.py, admin.py
 - models.py: removed some unnecessary fields in 'Enrolment' class
 - models.py: 'Class' class removed 'class_code', as it is duplicated with the 'number' attribute
 
+---
+Apr 13-16 2023 - development on bug/relationship
+- relationship fix for model improvement.
+- admin.py (remove Lecturer off a class)
+- git issue sorted (git stash, git fetch issue, branch code cross-over issue)
+- database issue sorted (drop, recreate, migrate)
+- admin can enter/view marks for students in a class
 
 To be built
 - Uploading students from excel files.
 - Emailing students when their marks are ready.
 - Lecturers entering students' marks in the gradebook.
 - Students viewing their marks in the gradebook.
+- Student and lecturer `Group` assigned by `admin` after registration/creation. 

@@ -62,7 +62,7 @@ sudo lsof -t -i tcp:8000
 - [x] Use template inheritance to reuse common components (e.g. header, footer)
 - [x] implementing user authentication: Set up user authentication to allow users to register, log in, and log out. Use Django's built-in authentication views and forms for this purpose. You can create custom templates and views to fit your app's design if needed.
 - [ ] admin can enroll/remove/update students to/from a class
-- [ ] admin can assign/remove/update lecturers to/from a class
+- [x] admin can assign/remove/update lecturers to/from a class
 - [ ] Lectures can enter students’ marks in the gradebook
 - [ ] Students can view their marks in the gradebook
 - [ ] The system can email students when their marks are ready
