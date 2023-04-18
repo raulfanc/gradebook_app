@@ -36,6 +36,8 @@ sudo lsof -t -i tcp:8000
 - [x] Generic Views and templates for 'Semester'
 - [x] Use Django's generic views and forms to handle CRUD operations for [Admin panel](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/)
 
+**after this development, can use similar implementations for other models**
+
 ---
 ## Wireframes
 - [x] Once the models.py is developed, draw UI and pages to continue the project development.Similar UI for other tables (classes)

@@ -7,15 +7,15 @@ started seting up the project and Create [README](../README.md)
 March 24th 2023 - started working on models.py, done a fiew steps
 
 1. developped models.py
- - 5  entities created according to [improvement 1](./models.py.md#improvement1) and [ERD](./ERD.png) apart from `enrolment`
+ - 5  entities created apart from `enrolment`
 
 2. Updated models.py
- - 10 entities now according to [improvement 2](./models.py.md#improvement2)
+ - 10 entities now added
  - it will be added the future development, for now keep the models.py simple only meeting the requirements of the assignment.
 
 ---
 March 25th 2023 @10:00pm 
-- improved the models.py again according to [improvement 3](./models.py.md#improvement3)
+- improved the models.py again 
 - also created forms.py according to `forms.py`
 - developped `Generic Views` for CRUD
 
@@ -79,6 +79,11 @@ Apr 13-16 2023 - development on bug/relationship
 - database issue sorted (drop, recreate, migrate)
 - admin can enter/view marks for students in a class
 
+---
+Apr 19 2023 @9:00am
+
+
+---
 To be built
 - Uploading students from excel files.
 - Emailing students when their marks are ready.

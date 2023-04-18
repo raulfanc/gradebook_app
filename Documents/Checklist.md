@@ -1,10 +1,11 @@
 [[ChatGPT]] to go to the related history link
 
 ## Task 1 - writing report
-- [x] evaluate **two programming languages** and **two data access technologies** and **present your findings** within a count of 1000 words [+/- 10%], excluding reference list.
+- [x] evaluate **two programming languages** and **two data access technologies** and **present your findings** within a count of 1000 words (+/- 10%), excluding reference list.
 - [x] Discuss the tools used in providing web-based applications.
 - [x] Design and implement a dynamic web application using a range of languages/technologies/tools.
 - [x] Discuss and evaluate the available data access technologies.
+
 
 #### Questions
 - [x]  Evaluate two web programming languages that can be used for this development.
@@ -13,37 +14,48 @@
 
 ---
 
-## Dynamic web app
-To develop the grade book system, you need to design and implement a dynamic web application using Django, SQLite and PostgreSQL available web development tools. You will also host your web application on the Doc hyper server with available add-ons. You will upload your code to GitHub. The requirements for the application are given below
+## Task 2 - Dynamic web app
+- To develop the grade book system,
+- Design and implement a dynamic web application using Django, and available web development tools.
+- Host web application on the Doc hyper server with available add-ons. 
+- Upload your code to GitHub. 
 
-Business Rules:
+### Business Rules:
+- [x] 1: One semester runs one to many courses: This is established through the `Class` model's foreign key to `Course`. (Many-to-Many relationship)
+- [x] 2: One course is run in zero to many semesters: This is established through the `Class` model's foreign key to `Course`. (Many-to-Many relationship)
+- [x] 3: One course can be separated into one to many classes: This is established through the `Class` model's foreign key to `Course`.(One-To-Many relationship)
+- [x] 4: One class can only run one course: The `Class` model's foreign key to `Course` ensures that each class is associated with only one course.(One-To-Many relationship)
+- [x] 5: One class can be taught by only one lecturer: This is established through the `Class` model's foreign key to `Lecturer`.(Zero-to-Many relationship)
+- [x] 6: One lecturer teaches zero to many classes: This relationship is established through the `Class` model's foreign key to `Lecturer`.(Zero-to-Many relationship)
+- [x] 7: One class holds one to many student’s enrollments: This is established through the `Enrollment` model's foreign key to `Class`.(Many-to-Many relationship)
+- [x] 8: One student enrolls in one to many courses: This is established through the `Enrollment` model's foreign key to `Student`.(Many-to-Many Relationship)
+- [x] 9: One enrollment fits in one class: The `Enrollment` model's foreign key to `Class` ensures this relationship. (Enrolment sits in between `Class` and `Student` as Intermediary)
+- [x] 10.One student enrollment belongs to one student: The `Enrollment` model's foreign key to `Student` ensures this relationship.
 
-- [ ] 1: One semester runs one to many courses: This is established through the `Class` model's foreign key to `Semester`.
-- [ ] 2: One course is run in zero to many semesters: This is also established through the `Class` model's foreign key to `Course`.
-- [ ] 3: One course can be separated into one to many classes: This is established through the `Class` model's foreign key to `Course`.
-- [ ] 4: One class can only run one course: The `Class` model's foreign key to `Course` ensures that each class is associated with only one course.
-- [ ] 5: One class can be taught by only one lecturer: This is established through the `Class` model's foreign key to `Lecturer`.
-- [ ] 6: One lecturer teaches zero to many classes: This relationship is established through the `Class` model's foreign key to `Lecturer`.
-- [ ] 7: One class holds one to many student’s enrollments: This is established through the `Enrollment` model's foreign key to `Class`.
-- [ ] 8: One enrollment fits in one class: The `Enrollment` model's foreign key to `Class` ensures this relationship.
-- [ ] 9: One student enrolls in one to many courses: This is established through the `Enrollment` model's foreign key to `Student`.
-- [ ] 10.One student enrollment belongs to one student: The `Enrollment` model's foreign key to `Student` ensures this relationship.
+### Client requirements:
+- [ ] 1. Administrator can create/update/delete/show semesters. 
+- [ ] 2. Administrator can create/update/delete/show courses. 
+- [ ] 3. Administrator can create/update/delete/show classes. 
+- [ ] 4. Administrator can create/update/delete/show lecturers. 
+- [ ] 5. Administrator can assign/remove/change/show a lecturer to a class. 
+- [ ] 6. Administrator can create/update/delete/show student 
+- [ ] 7. Administrator can enrol/remove/show student to classes. 
+- [ ] 8. Administrator can upload students from excel files to the website 
+- [ ] 9. The system can email students when their marks are ready 
+- [ ] 10. Lecturer can login to the gradebook 
+- [ ] 11. Lectures can enter students’ marks in the gradebook 
+- [ ] 12. Students can login to the gradebook 
+- [ ] 13. Students can view their marks in the gradebook.
 
-Client requirements:
-
-- [ ] 1-7, 9: These requirements can be implemented using Django's built-in CRUD views and forms based on the current models. 
-- [ ] 8: Administrator can upload students from excel files to the website: This requirement will need a custom view and form to handle file uploads, parsing, and creation of `Student` instances. 
-- [ ] 10-13: These requirements involve creating authentication and authorization systems for lecturers and students, and displaying their respective data based on the user type.
-
-In conclusion, the current models.py is well-designed to accommodate the business rules and client requirements. As you proceed to implement the views and templates, you may need to make some adjustments to the models, but this will largely depend on the specifics of your implementation.
+---
+## Checklist
 
 **Part A – Models [36 marks]**
-- [ ] Follow the given class diagram to create models
-- [ ] Note: Many to many relationships are not shown in the class diagram, please figure out where you will use many to many relationships.
+- [x] Follow the given class diagram to create models
+- [x] Note: Many to many relationships are not shown in the class diagram, please figure out where you will use many to many relationships.
 - [ ] CRUD, such as, email student, read excel file and so on
-- [ ] Encouraged to use better models
-![[models_diagram_sample.png]]
-
+- [x] Encouraged to use better models
+![ERD](ERD)
 
 **Part B: Views [34 marks]**
 
@@ -79,7 +91,8 @@ In conclusion, the current models.py is well-designed to accommodate the busines
    - to specify the python version for deployment
    - for example, if your application requires Python 3.8.x, you would create a `runtime.txt` file containing the following text:`python-3.8.x`
 
-
+---
+## Marking Criteria
 | Task                  | Maximum marks |
 | --------------------- | ------------- |
 | Technology Evaluation | 16            |

@@ -25,4 +25,4 @@ git commit -m "Initial commit"
 ```
 ==above step is for VS Code, if using PyCharm, create a project alongside an app==
 
-if using Pycharm, go back to [[assignment_1/README]]
+if using Pycharm, go back to [READEME](README)
