@@ -81,12 +81,19 @@ Apr 13-16 2023 - development on bug/relationship
 
 ---
 Apr 19 2023 @9:00am
+- Student and Lecturer Group working either by self registration or assigned from Admin panel
+- views and templates made for `enter_mark` and `view_mark`
+- `template_tag` used to control `html`' Authorization for Lecturer group.
 
+Lecturers entering students' marks in the gradebook, runs into error:
+# Page not found (404)
+No enrolment found matching the query
+Request Method: GET
+Request URL:http://127.0.0.1:8000/enter_grade/8/
+Raised by: gradebook_app.views.EnrolmentUpdateView
 
 ---
 To be built
 - Uploading students from excel files.
 - Emailing students when their marks are ready.
-- Lecturers entering students' marks in the gradebook.
 - Students viewing their marks in the gradebook.
-- Student and lecturer `Group` assigned by `admin` after registration/creation. 

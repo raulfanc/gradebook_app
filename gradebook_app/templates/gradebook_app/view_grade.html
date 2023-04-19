@@ -1,0 +1,10 @@
+{% extends 'gradebook_app/base.html' %}
+
+{% block content %}
+    <h2>View Your Grade</h2>
+    <p>Course: {{ object.enrolled_class.course.name }}</p>
+    <p>Class: {{ object.enrolled_class.name }}</p>
+    <p>Grade: {{ object.grade }}</p>
+
+    <a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}

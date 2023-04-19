@@ -12,14 +12,14 @@ views.py is working with forms.py and models.py to create the views for the admi
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
-from .models import *
-from .forms import *
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.utils.decorators import method_decorator
 
-
+from .models import *
+from .forms import *
 class HomePageView(TemplateView):
     template_name = 'gradebook_app/home.html'
 
@@ -136,23 +136,55 @@ class StudentDeleteView(DeleteView):
 #===========================end=============================================
 
 
-#======administrator to assign/remove/change/show lecturers to a class======
-class EnrolmentListView(ListView):
-    model = Enrolment
+##=====================proper permissions and checks=============================
+class LecturerRequiredMixin:
+    @method_decorator(login_required)
+    @method_decorator(user_passes_test(lambda u: u.groups.filter(name='lecturer').exists()))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+class StudentRequiredMixin:
+    @method_decorator(login_required)
+    @method_decorator(user_passes_test(lambda u: u.groups.filter(name='student').exists()))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+#==========================end=============================================
 
 
-class EnrolmentDetailView(DetailView):
-        model = Enrolment
-
-
+#==============================Enrolment================================
 class EnrolmentCreateView(CreateView):
     model = Enrolment
     form_class = EnrolmentForm
 
 
-class EnrolmentUpdateView(UpdateView):
+class EnrolmentListView(ListView):
+    model = Enrolment
+
+
+class EnrolmentDetailView(StudentRequiredMixin, DetailView):
+        model = Enrolment
+        template_name = 'gradebook_app/view_grade.html'
+        def get_queryset(self):
+            """
+            filter out the enrolment that is belong to the student
+            student can only see their own enrolment' marks
+            """
+            queryset = super().get_queryset()
+            return queryset.filter(enrolled_student=self.request.user.student_profile)
+
+
+class EnrolmentUpdateView(LecturerRequiredMixin, UpdateView):
     model = Enrolment
     form_class = EnrolmentForm
+    # fields = ['student', 'enrolled_class', 'grade']
+    template_name = 'gradebook_app/enrolment_update.html'
+
+    def get_queryset(self):
+        """
+        filter out the enrolment that is belong to the lecturer
+        """
+        queryset = super().get_queryset()
+        return queryset.filter(enrolled_class__lecturer=self.request.user.lecturer_profile)
 
 
 class EnrolmentDeleteView(DeleteView):
@@ -204,5 +236,4 @@ def update_user_info(request):
     else:
         form = UserUpdateForm(instance=request.user)
     return render(request, 'registration/update_user_info.html', {'form': form})
-
 

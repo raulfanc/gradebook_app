@@ -1,0 +1,10 @@
+{% extends 'gradebook_app/base.html' %}
+
+{% block content %}
+  <h2>Enter grade for {{ object.enrolled_student }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save changes</button>
+  </form>
+{% endblock %}
