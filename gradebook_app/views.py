@@ -161,30 +161,6 @@ class EnrolmentDeleteView(DeleteView):
 #===============================end============================================
 
 
-# ======administrator to enroll/remove/show students in classes================
-class EnrolmentStudentListView(ListView):
-    model = Enrolment
-
-
-class EnrolmentStudentDetailView(DetailView):
-    model = Enrolment
-
-
-class EnrolmentStudentCreateView(CreateView):
-    model = Enrolment
-    form_class = EnrolmentStudentForm
-
-
-class EnrolmentStudentUpdateView(UpdateView):
-    model = Enrolment
-    form_class = EnrolmentStudentForm
-
-
-class EnrolmentStudentDeleteView(DeleteView):
-    model = Enrolment
-    success_url = reverse_lazy('enrolment_student_list')
-#===============================end==========================================
-
 # Views for authentication's register
 def register(request):
     """

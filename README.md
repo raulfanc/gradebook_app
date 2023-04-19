@@ -36,6 +36,8 @@ sudo lsof -t -i tcp:8000
 - [x] Generic Views and templates for 'Semester'
 - [x] Use Django's generic views and forms to handle CRUD operations for [Admin panel](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/)
 
+**after this development, can use similar implementations for other models**
+
 ---
 ## Wireframes
 - [x] Once the models.py is developed, draw UI and pages to continue the project development.Similar UI for other tables (classes)
@@ -62,7 +64,7 @@ sudo lsof -t -i tcp:8000
 - [x] Use template inheritance to reuse common components (e.g. header, footer)
 - [x] implementing user authentication: Set up user authentication to allow users to register, log in, and log out. Use Django's built-in authentication views and forms for this purpose. You can create custom templates and views to fit your app's design if needed.
 - [ ] admin can enroll/remove/update students to/from a class
-- [ ] admin can assign/remove/update lecturers to/from a class
+- [x] admin can assign/remove/update lecturers to/from a class
 - [ ] Lectures can enter students’ marks in the gradebook
 - [ ] Students can view their marks in the gradebook
 - [ ] The system can email students when their marks are ready

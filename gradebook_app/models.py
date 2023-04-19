@@ -3,20 +3,29 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+
+
 # ==================Base Models==================
-
-
 class Semester(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Semester Name", help_text="Enter the name of the semester")
+    SEMESTER_CHOICES = [
+        (1, 'Semester 1'),
+        (2, 'Semester 2'),
+    ]
+    name = models.IntegerField(choices=SEMESTER_CHOICES)
     start_date = models.DateField()
     end_date = models.DateField()
-    year = models.IntegerField()
+    year = models.IntegerField(null=True, blank=True,editable=False)
+
+    def generate_name(self):
+        semester_choice = dict(self.SEMESTER_CHOICES)[self.name]
+        return f'{semester_choice} {self.year}'
+
+    def save(self, *args, **kwargs):
+        self.year = self.start_date.year
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.name} {self.year}"
-
-    class Meta:
-        ordering = ['-year', 'name']
+        return self.generate_name()
 
     def get_absolute_url(self):
         return reverse('semester_detail', args=[str(self.id)])
@@ -26,7 +35,7 @@ class Course(models.Model):
     title = models.CharField(max_length=100)
     code = models.SlugField(max_length=10, unique=True)
     description = models.TextField(blank=True)
-    semester = models.ForeignKey(Semester, on_delete=models.CASCADE, related_name='courses')
+    semesters = models.ManyToManyField(Semester, related_name='courses')
 
     def __str__(self):
         return self.title
@@ -37,8 +46,7 @@ class Course(models.Model):
 
 class Lecturer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True)
-    staffID = models.CharField(max_length=10)
+    staffID = models.CharField(max_length=5, unique=True, editable=False)
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
     email = models.EmailField()
@@ -49,13 +57,19 @@ class Lecturer(models.Model):
         return f"{self.firstname} {self.lastname}"
 
     class Meta:
-        ordering = ['lastname', 'firstname']
+        ordering = ['lastname', 'firstname', 'staffID']
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            latest_staff_id = Lecturer.objects.order_by('-staffID').first()
+            new_staff_id = 'T{:04d}'.format(int(latest_staff_id.staffID[1:]) + 1) if latest_staff_id else 'T0001'
+            self.staffID = new_staff_id
+        super().save(*args, **kwargs)
 
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    enrolment_date = models.DateField(auto_now_add=True)
-    StudentID = models.CharField(max_length=10)
+    StudentID = models.CharField(max_length=5, unique=True, editable=False)
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
     email = models.EmailField()
@@ -67,14 +81,24 @@ class Student(models.Model):
     class Meta:
         ordering = ['lastname', 'firstname']
 
+    def save(self, *args, **kwargs):
+        if not self.StudentID:
+            last_student = Student.objects.order_by('-id').first()
+            if last_student:
+                last_id = int(last_student.StudentID[1:])
+                new_id = f'S{last_id+1:04}'
+            else:
+                new_id = 'S0001'
+            self.StudentID = new_id
+        super().save(*args, **kwargs)
+
 
 class Class(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="classes")
+    number = models.CharField(max_length=4, unique=True, default="", verbose_name='Class Code')
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
-    lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="classes")
+    lecturer = models.ForeignKey(Lecturer, on_delete=models.SET_NULL, null=True, blank=True)
     students = models.ManyToManyField(Student, through='Enrolment')
-    number = models.CharField(max_length=20, unique=True, default="", verbose_name='Class Code')
-    schedule = models.TextField(blank=True)
 
     def __str__(self):
         return f"{self.course} - {self.number}"
@@ -82,35 +106,18 @@ class Class(models.Model):
     class Meta:
         ordering = ['course', 'number']
 
-    def save(self, *args, **kwargs):
-        if not self.number:
-            self.number = self.generate_class_number()
-        super().save(*args, **kwargs)
-
-    @staticmethod
-    def generate_class_number():
-        """
-        The generate_class_code method creates a random 10-character string using uuid.uuid4().hex.
-        It checks if the generated code is unique, and if not, it generates a new one.
-        :return: a unique 10-character string
-        """
-        number = uuid.uuid4().hex[:10].upper()
-        while Class.objects.filter(number=number).exists():
-            number = uuid.uuid4().hex[:10].upper()
-        return number
-
-
 # ==============end of Base Models=============
 
 
 class Enrolment(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    enrolled_class = models.ForeignKey(Class, on_delete=models.CASCADE)
+    enrolled_student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, blank=True, db_column='studentID')
+    enrolled_class = models.ForeignKey(Class, on_delete=models.CASCADE, db_column='classID')
     enrollment_date = models.DateField(auto_now_add=True)
+    grade_date = models.DateField(blank=True, null=True)
+    grade = models.PositiveIntegerField(blank=True, null=True, verbose_name='Mark')
 
     class Meta:
-        unique_together = ('student', 'enrolled_class')
+        unique_together = ('enrolled_student', 'enrolled_class')
 
     def __str__(self):
-        return f"{self.student} - {self.enrolled_class}"
-
+        return f"{self.enrolled_student} - {self.enrolled_class}"

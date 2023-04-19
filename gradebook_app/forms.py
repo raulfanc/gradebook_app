@@ -21,7 +21,7 @@ class SemesterForm(forms.ModelForm):
     """
     class Meta:
         model = Semester
-        fields = ['name', 'start_date', 'end_date', 'year']
+        fields = ['name', 'start_date', 'end_date']
         widgets = {
             'start_date': DateInput(attrs={'type': 'date'}),
             'end_date': DateInput(attrs={'type': 'date'}),
@@ -45,19 +45,22 @@ class CourseForm(forms.ModelForm):
 class ClassForm(forms.ModelForm):
     class Meta:
         model = Class
-        fields = ['number', 'course', 'semester', 'lecturer', 'students', 'schedule']
+        fields = ['number', 'course', 'semester', 'lecturer', 'students']
+        labels = {
+            'lecturer': 'Lecturer (Set to blank to remove assigned lecturer)',
+        }
 
 
 class LecturerForm(forms.ModelForm):
     class Meta:
         model = Lecturer
-        fields = ['user', 'bio', 'staffID', 'firstname', 'lastname', 'email', 'course', 'DOB']
+        fields = ['user', 'firstname', 'lastname', 'email', 'course', 'DOB']
 
 
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['user', 'StudentID', 'firstname', 'lastname', 'email', 'DOB']
+        fields = ['user', 'firstname', 'lastname', 'email', 'DOB']
 
 
 # Customised User Creation Form with validation
