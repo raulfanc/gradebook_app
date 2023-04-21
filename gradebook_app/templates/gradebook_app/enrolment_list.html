@@ -2,11 +2,16 @@
 
 {% block content %}
     <h2>Enrolment List</h2>
-    {% if not has_classes %}
+    {% if not request.session.has_classes %}
         <div class="alert alert-info" role="alert">
             You have not been assigned to any classes.
         </div>
     {% else %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
         <table class="table">
             <thead>
             <tr>
@@ -25,7 +30,7 @@
                     <td><a href="{% url 'update_grade' enrolment.pk %}" class="btn btn-primary btn-sm">
                         <i class="bi bi-pencil"></i> Enter Grade
                     </a>
-                        <a href="#" class="btn btn-success btn-sm">
+                        <a href="{% url 'send_email' enrolment.pk %}" class="btn btn-success btn-sm">
                             <i class="bi bi-envelope"></i> Email
                         </a>
                     </td>
@@ -35,5 +40,3 @@
         </table>
     {% endif %}
 {% endblock %}
-
-

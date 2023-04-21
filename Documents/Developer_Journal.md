@@ -95,11 +95,12 @@ Raised by: gradebook_app.views.EnrolmentUpdateView
 ---
 Apr 21 2023 @6:00pm
 - Lecturer can now view and mark the student who enrolled the same class
-- bootstrap icon for enter_mark and email
-- 
+- bootstrap icon buttons for 'enter_mark' and 'email'
+- Lecturers now can email student their marks
+- Students now can view marks in the gradebook.
 
 ---
 To be built
 - Uploading students from excel files.
-- Emailing students when their marks are ready.
-- Students viewing their marks in the gradebook.
+- User profile and Student/Lecturer profile are not connected
+- showing the user profile after logged in

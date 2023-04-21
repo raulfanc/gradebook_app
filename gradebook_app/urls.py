@@ -43,6 +43,9 @@ urlpatterns = [
     # Enrolment URLs
     path('enrolments/', views.EnrolmentListView.as_view(), name='enrolment_list'),
     path('enter_grade/<int:pk>/', views.EnrolmentUpdateView.as_view(), name='update_grade'),
+    path('student_enrolments/', views.StudentEnrolmentListView.as_view(), name='student_enrolment_list'),
     path('view_grade/<int:pk>/', views.EnrolmentDetailView.as_view(), name='view_grade'),
+    path('send_email/<int:enrolment_id>/', views.send_email, name='send_email'),
+
 
 ]

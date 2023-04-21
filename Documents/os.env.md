@@ -39,4 +39,6 @@ Now, ==`settings.py`== file will read the database credentials from the environm
 
 Remember to share the `.env` file or the environment variables with your team members securely, so they can configure their development environments accordingly.
 
-
+---
+# SMTP setup
+when setting up email service, also recommended to use this practice, see [SMTP GMail](SMTP_Gmail)

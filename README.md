@@ -21,7 +21,7 @@ sudo lsof -t -i tcp:8000
 - [x] Git: using [Sourcetree](https://www.sourcetreeapp.com/)
 - [x] DB: using [PostgreSQL](./Documents/PostgreSQL_Setup.md) set up
 - [x] DB management tool: using [Data Grip](./Documents/Data_Grip.md) to set up, this is similar to PgAdmin4, but more advanced.
-- [x] Best practice to manage DB confidential: see [guide](./Documents/Environment_Variables.md)
+- [x] Best practice to confidential: see [os.env](os.env.md)
 - [x] `django debug toolbar`: follow [link](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html)
 - [x] `pylint-django`: terminal `pip install pylint-django`
 
