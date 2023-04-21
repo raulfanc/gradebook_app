@@ -29,7 +29,7 @@ class HomePageView(TemplateView):
     template_name = 'gradebook_app/home.html'
 
 
-# =====administrator to create/update/delete/show semesters========
+# ==============administrator to create/update/delete/show semesters================
 class SemesterListView(ListView):
     model = Semester
 
@@ -51,9 +51,8 @@ class SemesterUpdateView(UpdateView):
 class SemesterDeleteView(DeleteView):
     model = Semester
     success_url = reverse_lazy('semester_list')
-
-
 # =============================end====================================
+
 
 # ==========administrator to create/update/delete/show courses========
 class CourseListView(ListView):
@@ -72,8 +71,6 @@ class CourseCreateView(CreateView):
 class CourseUpdateView(UpdateView):
     model = Course
     form_class = CourseForm
-
-
 # ===========================end======================================
 
 
@@ -94,8 +91,6 @@ class ClassCreateView(CreateView):
 class ClassUpdateView(UpdateView):
     model = Class
     form_class = ClassForm
-
-
 # ===========================end========================================
 
 
@@ -121,9 +116,7 @@ class LecturerUpdateView(UpdateView):
 class LecturerDeleteView(DeleteView):
     model = Lecturer
     success_url = reverse_lazy('lecturer_list')
-
-
-# ===========================end=======================================
+#=========================End=======================================
 
 
 # ==========administrator to create/update/delete/show students========
@@ -148,9 +141,7 @@ class StudentUpdateView(UpdateView):
 class StudentDeleteView(DeleteView):
     model = Student
     success_url = reverse_lazy('student_list')
-
-
-# ===========================end=============================================
+# ===========================End=============================================
 
 
 ##=====================proper permissions and checks=============================
@@ -166,9 +157,7 @@ class StudentRequiredMixin:
     @method_decorator(user_passes_test(lambda u: u.groups.filter(name='student').exists()))
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-
-
-# ==========================end=============================================
+# ==========================End=============================================
 
 
 # ==============================Enrolment================================
@@ -238,8 +227,6 @@ class EnrolmentUpdateView(LecturerRequiredMixin, UpdateView):
 class EnrolmentDeleteView(DeleteView):
     model = Enrolment
     success_url = reverse_lazy('enrolment_list')
-
-
 # =====================================End=================================================
 
 
@@ -276,18 +263,27 @@ def update_user_info(request):
     :param request: The HTTP request object.
     :return: A rendered HTML response containing a UserUpdateForm.
     """
+    user = request.user
+    if user.groups.filter(name="student").exists():
+        initial_form_class = StudentForm
+    elif user.groups.filter(name="lecturer").exists():
+        initial_form_class = LecturerForm
+    else:
+        initial_form_class = UserUpdateForm
+
     if request.method == 'POST':
-        form = UserUpdateForm(request.POST, instance=request.user)
+        form = initial_form_class(request.POST, instance=user)
         if form.is_valid():
-            user = form.save(commit=False)
+            instance = form.save(commit=False)
             group = form.cleaned_data.get('group')
-            user.groups.set([group])  # Set the selected group
-            user.save()
+            if group:
+                user.groups.set([group])  # Set the selected group
+            instance.user = user
+            instance.save()
             return redirect('home')
     else:
-        form = UserUpdateForm(instance=request.user)
+        form = initial_form_class(instance=user)
     return render(request, 'registration/update_user_info.html', {'form': form})
-
 
 # ====================================End=======================================================
 

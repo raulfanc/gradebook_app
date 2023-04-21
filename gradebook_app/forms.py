@@ -55,13 +55,13 @@ class ClassForm(forms.ModelForm):
 class LecturerForm(forms.ModelForm):
     class Meta:
         model = Lecturer
-        fields = ['user', 'firstname', 'lastname', 'email', 'course', 'DOB']
+        fields = ['firstname', 'lastname', 'email', 'course', 'DOB']
 
 
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['user', 'firstname', 'lastname', 'email', 'DOB']
+        fields = ['firstname', 'lastname', 'email', 'DOB']
 
 
 # Customised User Creation Form with validation
@@ -75,6 +75,14 @@ class UserUpdateForm(forms.ModelForm):
         validators=[RegexValidator(r'^[a-zA-Z]+$', 'Enter a valid last name (letters only)')]
     )
     email = forms.EmailField(required=True, validators=[EmailValidator()])
+    """
+    this line below to retrieve the group name from the database, and display it in the form
+    this line below add flexiblity to the form, so that we can add more groups in the future
+    - create a new model in models.py
+    - create a form for the new model in forms.py
+    - modify the line below
+    - modify the views.py to add elif condition to include the new group
+    """
     group = forms.ModelChoiceField(queryset=Group.objects.filter(name__in=['student', 'lecturer']), required=True)
     DOB = forms.DateField(
         required=True,

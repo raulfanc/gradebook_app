@@ -38,7 +38,8 @@ sudo lsof -t -i tcp:8000
 
 **after this development, can use similar implementations for other models**
 
-## refer to [Checklist](./Documents/Checklist) for the rest of functionalities
+**refer to [Checklist](./Documents/Checklist) for the rest of functionalities**
+
 
 ---
 ## Wireframes
@@ -58,5 +59,6 @@ sudo lsof -t -i tcp:8000
 ![Semester_update page](https://docs.google.com/drawings/d/1IYvwFr6Nu8EJp3uezesdwax72t551_J6P9Q77oPqySM/export/png)
 
 ---
-
+## Future Development
+- refer to [CustomUser](./Documents/CustomUserModel) for better user management.
 
