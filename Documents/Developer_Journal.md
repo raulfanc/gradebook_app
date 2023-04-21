@@ -37,7 +37,7 @@ Apr 07th 2023 @17:00pm - Authentication development
 
 ---
 
-Apr 08 2023 @ 10:00pm - Marks and Enrolment(partially done)
+Apr 08 2023 @ 10:00pm **(All developments are failure)**
 - The system can email students when their marks are ready 
 - Lectures can enter students’ marks in the gradebook 
 - Students can view their marks in the gradebook.
@@ -104,3 +104,4 @@ To be built
 - Uploading students from excel files.
 - User profile and Student/Lecturer profile are not connected
 - showing the user profile after logged in
+- bug when regitser new user, should add check the user cannot log in if haven't updated profle.(now user can register and then close the page, witout updating profile), also can integrate update profle into part of registeration (easier approach).

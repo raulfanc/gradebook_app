@@ -21,7 +21,7 @@ sudo lsof -t -i tcp:8000
 - [x] Git: using [Sourcetree](https://www.sourcetreeapp.com/)
 - [x] DB: using [PostgreSQL](./Documents/PostgreSQL_Setup.md) set up
 - [x] DB management tool: using [Data Grip](./Documents/Data_Grip.md) to set up, this is similar to PgAdmin4, but more advanced.
-- [x] Best practice to confidential: see [os.env](os.env.md)
+- [x] Best practice to confidential: see [os.env](./Documents/os.env.md)
 - [x] `django debug toolbar`: follow [link](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html)
 - [x] `pylint-django`: terminal `pip install pylint-django`
 
@@ -37,6 +37,8 @@ sudo lsof -t -i tcp:8000
 - [x] Use Django's generic views and forms to handle CRUD operations for [Admin panel](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/)
 
 **after this development, can use similar implementations for other models**
+
+## refer to [Checklist](./Documents/Checklist) for the rest of functionalities
 
 ---
 ## Wireframes
@@ -56,42 +58,5 @@ sudo lsof -t -i tcp:8000
 ![Semester_update page](https://docs.google.com/drawings/d/1IYvwFr6Nu8EJp3uezesdwax72t551_J6P9Q77oPqySM/export/png)
 
 ---
-
-## Feature Development:
-
-- [x] **More Templates, Views, and Forms**
-- [x] In gradebook_app/templates/, create the necessary templates for lecturers, and students
-- [x] Use template inheritance to reuse common components (e.g. header, footer)
-- [x] implementing user authentication: Set up user authentication to allow users to register, log in, and log out. Use Django's built-in authentication views and forms for this purpose. You can create custom templates and views to fit your app's design if needed.
-- [ ] admin can enroll/remove/update students to/from a class
-- [x] admin can assign/remove/update lecturers to/from a class
-- [ ] Lectures can enter students’ marks in the gradebook
-- [ ] Students can view their marks in the gradebook
-- [ ] The system can email students when their marks are ready
-- [ ] Administrator can upload students from excel files to the website
-
-- [ ] **Test the application**
-
-- [ ] **Prepare for Deployment 
-- [ ] Create `runtime.txt` with the required Python version
-- [ ] Create `requirements.txt` using `pip freeze > requirements.txt`
-- [ ] Commit and push changes to GitHub
-
-- [ ] **Deploy to Doc hyper server**
-- [ ] Follow the instructions provided by Doc hyper to deploy the app
-
----
-
-### Notes
-what need to cover requirements for the project
-ERD
-2. list of cover CRUD for the DB
-- develop and test independent models and then develop related models
-- views
-- urls
-- postman to test?
-- Django REST API
-1. Generic class (UTIL?) avoid repeated coding, like a template class
-2. security things to do at the end
 
 

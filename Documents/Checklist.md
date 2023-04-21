@@ -10,7 +10,7 @@
 #### Questions
 - [x]  Evaluate two web programming languages that can be used for this development.
 - [x]  Evaluate two database technologies can be used for this development.
-- [ ] Based on your evaluation of questions 1 and 2 recommend a web programme language and data access technology that can be used for development.
+- [x] Based on your evaluation of questions 1 and 2 recommend a web programme language and data access technology that can be used for development.
 
 ---
 
@@ -33,19 +33,19 @@
 - [x] 10.One student enrollment belongs to one student: The `Enrollment` model's foreign key to `Student` ensures this relationship.
 
 ### Client requirements:
-- [ ] 1. Administrator can create/update/delete/show semesters. 
-- [ ] 2. Administrator can create/update/delete/show courses. 
-- [ ] 3. Administrator can create/update/delete/show classes. 
-- [ ] 4. Administrator can create/update/delete/show lecturers. 
-- [ ] 5. Administrator can assign/remove/change/show a lecturer to a class. 
-- [ ] 6. Administrator can create/update/delete/show student 
-- [ ] 7. Administrator can enrol/remove/show student to classes. 
+- [x] 1. Administrator can create/update/delete/show semesters. 
+- [x] 2. Administrator can create/update/delete/show courses. 
+- [x] 3. Administrator can create/update/delete/show classes. 
+- [x] 4. Administrator can create/update/delete/show lecturers. 
+- [x] 5. Administrator can assign/remove/change/show a lecturer to a class. 
+- [x] 6. Administrator can create/update/delete/show student 
+- [x] 7. Administrator can enrol/remove/show student to classes. 
 - [ ] 8. Administrator can upload students from excel files to the website 
-- [ ] 9. The system can email students when their marks are ready 
-- [ ] 10. Lecturer can login to the gradebook 
-- [ ] 11. Lectures can enter students’ marks in the gradebook 
-- [ ] 12. Students can login to the gradebook 
-- [ ] 13. Students can view their marks in the gradebook.
+- [x] 9. The system can email students when their marks are ready 
+- [x] 10. Lecturer can login to the gradebook 
+- [x] 11. Lectures can enter students’ marks in the gradebook 
+- [x] 12. Students can login to the gradebook 
+- [x] 13. Students can view their marks in the gradebook.
 
 ---
 ## Checklist
@@ -53,9 +53,9 @@
 **Part A – Models [36 marks]**
 - [x] Follow the given class diagram to create models
 - [x] Note: Many to many relationships are not shown in the class diagram, please figure out where you will use many to many relationships.
-- [ ] CRUD, such as, email student, read excel file and so on
-- [x] Encouraged to use better models
-![ERD](ERD)
+- [x] CRUD, such as, email student
+- [ ] upload and read file
+![ERD](ERD.png)
 
 **Part B: Views [34 marks]**
 
@@ -63,22 +63,22 @@
 - [x] 2. View for administrator to create/update/delete/show courses (including tags management)
 - [x] 3. View for administrator to create/update/delete/show classes
 - [x] 4. View for administrator to create/update/delete/show lecturers
-- [ ] 5. View for administrator to assign/remove/change/show lecturers to a class
+- [x] 5. View for administrator to assign/remove/change/show lecturers to a class
 - [x] 6. View for administrator to create/update/delete/show students (including student profiles)
-- [ ] 7. View for administrator to enroll/remove/show students in classes
-- [ ] 8. View for administrator to upload students from excel files to the website
-- [ ] 9. View for the system to email students when their marks are ready
-- [ ] 10. View for lecturer to **log in** to the gradebook
-- [ ] 11. View for lecturers to enter students' marks
-- [ ] 12. View for student to **log in** to the gradebook
-- [ ] 13. View for students to view their marks
+- [x] 7. View for administrator to enroll/remove/show students in classes
+- [x] 8. View for administrator to upload students from excel files to the website
+- [x] 9. View for the system to email students when their marks are ready
+- [x] 10. View for lecturer to **log in** to the gradebook
+- [x] 11. View for lecturers to enter students' marks
+- [x] 12. View for student to **log in** to the gradebook
+- [x] 13. View for students to view their marks
 
 **Part C: Templates: [10 marks]**
-- [ ] Template(s) for all administrator's functions
-- [ ] Template(s) for lecturers' functions 
-- [ ] Template(s) for student's functions (including viewing marks)
-- [ ] Authentication and authorization on all templates
-- [ ] Templates can be reused
+- [x] Template(s) for all administrator's functions
+- [x] Template(s) for lecturers' functions 
+- [x] Template(s) for student's functions (including viewing marks)
+- [x] Authentication and authorization on all templates
+- [x] Templates can be reused
 
 **Part D: Deployment [4 marks]**
 - [ ] Setup Github for Django
