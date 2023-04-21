@@ -10,21 +10,26 @@ View for the students to view their marks in the gradebook.
 views.py is working with forms.py and models.py to create the views for the administrator and the lecturer.
 """
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
-from .models import *
-from .forms import *
-from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
+from django.shortcuts import get_object_or_404, render, redirect
+from django.utils.decorators import method_decorator
+from django.core.mail import send_mail
+from django.conf import settings
+
+from .models import *
+from .forms import *
 
 
 class HomePageView(TemplateView):
     template_name = 'gradebook_app/home.html'
 
 
-#=====administrator to create/update/delete/show semesters========
+# =====administrator to create/update/delete/show semesters========
 class SemesterListView(ListView):
     model = Semester
 
@@ -46,11 +51,14 @@ class SemesterUpdateView(UpdateView):
 class SemesterDeleteView(DeleteView):
     model = Semester
     success_url = reverse_lazy('semester_list')
-#=============================end====================================
 
-#==========administrator to create/update/delete/show courses========
+
+# =============================end====================================
+
+# ==========administrator to create/update/delete/show courses========
 class CourseListView(ListView):
     model = Course
+
 
 class CourseDetailView(DetailView):
     model = Course
@@ -64,10 +72,12 @@ class CourseCreateView(CreateView):
 class CourseUpdateView(UpdateView):
     model = Course
     form_class = CourseForm
-#===========================end======================================
 
 
-#==========administrator to create/update/delete/show classes========
+# ===========================end======================================
+
+
+# ==========administrator to create/update/delete/show classes========
 class ClassListView(ListView):
     model = Class
 
@@ -84,10 +94,12 @@ class ClassCreateView(CreateView):
 class ClassUpdateView(UpdateView):
     model = Class
     form_class = ClassForm
-#===========================end========================================
 
 
-#==========administrator to create/update/delete/show lecturers========
+# ===========================end========================================
+
+
+# ==========administrator to create/update/delete/show lecturers========
 class LecturerListView(ListView):
     model = Lecturer
 
@@ -109,10 +121,12 @@ class LecturerUpdateView(UpdateView):
 class LecturerDeleteView(DeleteView):
     model = Lecturer
     success_url = reverse_lazy('lecturer_list')
-#===========================end=======================================
 
 
-#==========administrator to create/update/delete/show students========
+# ===========================end=======================================
+
+
+# ==========administrator to create/update/delete/show students========
 class StudentListView(ListView):
     model = Student
 
@@ -130,37 +144,106 @@ class StudentUpdateView(UpdateView):
     model = Student
     form_class = StudentForm
 
+
 class StudentDeleteView(DeleteView):
     model = Student
     success_url = reverse_lazy('student_list')
-#===========================end=============================================
 
 
-#======administrator to assign/remove/change/show lecturers to a class======
-class EnrolmentListView(ListView):
-    model = Enrolment
+# ===========================end=============================================
 
 
-class EnrolmentDetailView(DetailView):
-        model = Enrolment
+##=====================proper permissions and checks=============================
+class LecturerRequiredMixin:
+    @method_decorator(login_required)
+    @method_decorator(user_passes_test(lambda u: u.groups.filter(name='lecturer').exists()))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 
+class StudentRequiredMixin:
+    @method_decorator(login_required)
+    @method_decorator(user_passes_test(lambda u: u.groups.filter(name='student').exists()))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+# ==========================end=============================================
+
+
+# ==============================Enrolment================================
 class EnrolmentCreateView(CreateView):
     model = Enrolment
     form_class = EnrolmentForm
 
 
-class EnrolmentUpdateView(UpdateView):
+class EnrolmentListView(LecturerRequiredMixin, ListView):
+    model = Enrolment
+
+    def get_queryset(self):
+        """
+        Filter out the enrolments that belong to classes taught by the lecturer.
+        - Lecturers can only see enrolments of their own classes.
+        - The lecturer's classes will be stored in the session.
+        - If the lecturer has no classes, the lecturer will be redirected to the home page (handled by html).
+        """
+        queryset = super().get_queryset()
+        lecturer_classes = Class.objects.filter(lecturer=self.request.user.lecturer_profile)
+        has_classes = lecturer_classes.exists()
+        self.request.session['has_classes'] = has_classes
+        return queryset.filter(enrolled_class__in=lecturer_classes)
+
+
+class StudentEnrolmentListView(StudentRequiredMixin, ListView):
+    model = Enrolment
+    template_name = 'gradebook_app/student_enrolment_list.html'
+
+    def get_queryset(self):
+        """same as above list view, but for STUDENTs"""
+        queryset = super().get_queryset()
+        student_enrolments = queryset.filter(enrolled_student=self.request.user.student_profile)
+        self.request.session['has_enrolments'] = student_enrolments.exists()
+        return student_enrolments
+
+
+class EnrolmentDetailView(StudentRequiredMixin, DetailView):
+    model = Enrolment
+    template_name = 'gradebook_app/view_grade.html'
+
+    def get_queryset(self):
+        """same as the above code"""
+        queryset = super().get_queryset()
+        return queryset.filter(enrolled_student=self.request.user.student_profile)
+
+
+
+class EnrolmentUpdateView(LecturerRequiredMixin, UpdateView):
     model = Enrolment
     form_class = EnrolmentForm
+    template_name = 'gradebook_app/enrolment_update.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(enrolled_class__lecturer=self.request.user.lecturer_profile)
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        print(f"Enrolment ID: {obj.pk}, Student: {obj.enrolled_student}, Class: {obj.enrolled_class}")
+        return obj
+
+    def get_success_url(self):
+        return reverse_lazy('enrolment_list')
 
 
 class EnrolmentDeleteView(DeleteView):
     model = Enrolment
     success_url = reverse_lazy('enrolment_list')
-#===============================end============================================
 
 
+# =====================================End=================================================
+
+
+# ==============================Register and Profile Update================================
 # Views for authentication's register
 def register(request):
     """
@@ -206,3 +289,30 @@ def update_user_info(request):
     return render(request, 'registration/update_user_info.html', {'form': form})
 
 
+# ====================================End=======================================================
+
+
+# ====================================Email====================================================
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='lecturer').exists())
+def send_email(request, enrolment_id):
+    """
+    Send an email to the student
+    :param request: normal request
+    :param enrolment_id: the id of the enrolment linked to the enrolled student and assigned lecturer
+    :return: redirect to the enrolment list page
+    """
+    enrolment = get_object_or_404(Enrolment, pk=enrolment_id)
+    student_email = enrolment.enrolled_student.email
+    subject = "Your Grade is Available"
+    message = f"Dear {enrolment.enrolled_student},\n\nYour grade for {enrolment.enrolled_class} is now available. Please log in to the Gradebook to view your grade.\n\nBest regards,\n{enrolment.enrolled_class.lecturer}\nLecturer"
+    from_email = None  # Uses the default email in settings.py
+
+    try:
+        send_mail(subject, message, from_email, [student_email])
+        messages.success(request, f"Email sent to {enrolment.enrolled_student}.")
+    except Exception as e:
+        messages.error(request, str(e))
+
+    return redirect('enrolment_list')
+# ================================end============================================

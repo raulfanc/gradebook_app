@@ -37,7 +37,7 @@ Apr 07th 2023 @17:00pm - Authentication development
 
 ---
 
-Apr 08 2023 @ 10:00pm - Marks and Enrolment(partially done)
+Apr 08 2023 @ 10:00pm **(All developments are failure)**
 - The system can email students when their marks are ready 
 - Lectures can enter students’ marks in the gradebook 
 - Students can view their marks in the gradebook.
@@ -81,12 +81,27 @@ Apr 13-16 2023 - development on bug/relationship
 
 ---
 Apr 19 2023 @9:00am
+- Student and Lecturer Group working either by self registration or assigned from Admin panel
+- views and templates made for `enter_mark` and `view_mark`
+- `template_tag` used to control `html`' Authorization for Lecturer group.
 
+Lecturers entering students' marks in the gradebook, runs into error:
+# Page not found (404)
+No enrolment found matching the query
+Request Method: GET
+Request URL:http://127.0.0.1:8000/enter_grade/8/
+Raised by: gradebook_app.views.EnrolmentUpdateView
+
+---
+Apr 21 2023 @6:00pm
+- Lecturer can now view and mark the student who enrolled the same class
+- bootstrap icon buttons for 'enter_mark' and 'email'
+- Lecturers now can email student their marks
+- Students now can view marks in the gradebook.
 
 ---
 To be built
 - Uploading students from excel files.
-- Emailing students when their marks are ready.
-- Lecturers entering students' marks in the gradebook.
-- Students viewing their marks in the gradebook.
-- Student and lecturer `Group` assigned by `admin` after registration/creation. 
+- User profile and Student/Lecturer profile are not connected
+- showing the user profile after logged in
+- bug when regitser new user, should add check the user cannot log in if haven't updated profle.(now user can register and then close the page, witout updating profile), also can integrate update profle into part of registeration (easier approach).

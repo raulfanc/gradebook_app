@@ -45,7 +45,7 @@ class Course(models.Model):
 
 
 class Lecturer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='lecturer_profile')
     staffID = models.CharField(max_length=5, unique=True, editable=False)
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
@@ -68,7 +68,7 @@ class Lecturer(models.Model):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     StudentID = models.CharField(max_length=5, unique=True, editable=False)
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
