@@ -93,6 +93,12 @@ Request URL:http://127.0.0.1:8000/enter_grade/8/
 Raised by: gradebook_app.views.EnrolmentUpdateView
 
 ---
+Apr 21 2023 @6:00pm
+- Lecturer can now view and mark the student who enrolled the same class
+- bootstrap icon for enter_mark and email
+- 
+
+---
 To be built
 - Uploading students from excel files.
 - Emailing students when their marks are ready.

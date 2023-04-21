@@ -1,3 +1,39 @@
 {% extends 'gradebook_app/base.html' %}
-{# this one is to assign lecturer to a class#}
+
+{% block content %}
+    <h2>Enrolment List</h2>
+    {% if not has_classes %}
+        <div class="alert alert-info" role="alert">
+            You have not been assigned to any classes.
+        </div>
+    {% else %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Student</th>
+                <th>Class</th>
+                <th>Grade</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for enrolment in object_list %}
+                <tr>
+                    <td>{{ enrolment.enrolled_student }}</td>
+                    <td>{{ enrolment.enrolled_class }}</td>
+                    <td>{{ enrolment.grade }}</td>
+                    <td><a href="{% url 'update_grade' enrolment.pk %}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil"></i> Enter Grade
+                    </a>
+                        <a href="#" class="btn btn-success btn-sm">
+                            <i class="bi bi-envelope"></i> Email
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
+
 

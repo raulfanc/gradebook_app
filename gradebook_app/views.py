@@ -157,8 +157,25 @@ class EnrolmentCreateView(CreateView):
     form_class = EnrolmentForm
 
 
-class EnrolmentListView(ListView):
+class EnrolmentListView(LecturerRequiredMixin, ListView):
     model = Enrolment
+
+    def get_queryset(self):
+        """
+        Filter out the enrolments that belong to classes taught by the lecturer.
+        Lecturers can only see enrolments of their own classes.
+        """
+        queryset = super().get_queryset()
+        return queryset.filter(enrolled_class__lecturer=self.request.user.lecturer_profile)
+
+    def get_context_data(self, **kwargs):
+        """
+        context with a flag indicating whether the lecturer has any classes
+        then the template can decide whether to show the enrolment list or not
+        """
+        context = super().get_context_data(**kwargs)
+        context['has_classes'] = self.request.user.lecturer_profile.classes_taught.exists()
+        return context
 
 
 class EnrolmentDetailView(StudentRequiredMixin, DetailView):
@@ -180,11 +197,13 @@ class EnrolmentUpdateView(LecturerRequiredMixin, UpdateView):
     template_name = 'gradebook_app/enrolment_update.html'
 
     def get_queryset(self):
-        """
-        filter out the enrolment that is belong to the lecturer
-        """
         queryset = super().get_queryset()
         return queryset.filter(enrolled_class__lecturer=self.request.user.lecturer_profile)
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        print(f"Enrolment ID: {obj.pk}, Student: {obj.enrolled_student}, Class: {obj.enrolled_class}")
+        return obj
 
 
 class EnrolmentDeleteView(DeleteView):

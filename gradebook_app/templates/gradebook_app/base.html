@@ -28,7 +28,7 @@
                         </li>
                         <li class="nav-item">
                             {% if user|has_group:'lecturer' %}
-                                <a class="nav-link" href="{% url 'update_grade' user.pk %}">Enter Grade</a>
+                                <a class="nav-link" href="{% url 'enrolment_list'%}">View Grade</a>
                             {% else %}
                                 <a class="nav-link disabled" href="#">Enter Grade</a>
                             {% endif %}

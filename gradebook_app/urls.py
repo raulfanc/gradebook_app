@@ -41,6 +41,7 @@ urlpatterns = [
     path('students/<int:pk>/delete/', views.StudentDeleteView.as_view(), name='student_delete'),
 
     # Enrolment URLs
+    path('enrolments/', views.EnrolmentListView.as_view(), name='enrolment_list'),
     path('enter_grade/<int:pk>/', views.EnrolmentUpdateView.as_view(), name='update_grade'),
     path('view_grade/<int:pk>/', views.EnrolmentDetailView.as_view(), name='view_grade'),
 
