@@ -66,7 +66,7 @@
 - [x] 5. View for administrator to assign/remove/change/show lecturers to a class
 - [x] 6. View for administrator to create/update/delete/show students (including student profiles)
 - [x] 7. View for administrator to enroll/remove/show students in classes
-- [x] 8. View for administrator to upload students from excel files to the website
+- [ ] 8. View for administrator to upload students from excel files to the website
 - [x] 9. View for the system to email students when their marks are ready
 - [x] 10. View for lecturer to **log in** to the gradebook
 - [x] 11. View for lecturers to enter students' marks

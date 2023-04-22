@@ -312,3 +312,5 @@ def send_email(request, enrolment_id):
 
     return redirect('enrolment_list')
 # ================================end============================================
+
+
