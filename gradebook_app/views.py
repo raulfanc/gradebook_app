@@ -1,14 +1,9 @@
-"""
-View for the administrator to enroll/remove/show students in classes.
-View for the administrator to upload students from excel files to the website.
-View for the system to email students when their marks are ready.
-View for the lecturer to log in to the gradebook.
-View for the lecturer to enter students' marks in the gradebook.
-View for the student to log in to the gradebook.
-View for the students to view their marks in the gradebook.
+import pandas as pd
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
+from django.urls import reverse
 
-views.py is working with forms.py and models.py to create the views for the administrator and the lecturer.
-"""
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
@@ -51,6 +46,8 @@ class SemesterUpdateView(UpdateView):
 class SemesterDeleteView(DeleteView):
     model = Semester
     success_url = reverse_lazy('semester_list')
+
+
 # =============================end====================================
 
 
@@ -71,6 +68,8 @@ class CourseCreateView(CreateView):
 class CourseUpdateView(UpdateView):
     model = Course
     form_class = CourseForm
+
+
 # ===========================end======================================
 
 
@@ -91,6 +90,8 @@ class ClassCreateView(CreateView):
 class ClassUpdateView(UpdateView):
     model = Class
     form_class = ClassForm
+
+
 # ===========================end========================================
 
 
@@ -116,7 +117,9 @@ class LecturerUpdateView(UpdateView):
 class LecturerDeleteView(DeleteView):
     model = Lecturer
     success_url = reverse_lazy('lecturer_list')
-#=========================End=======================================
+
+
+# =========================End=======================================
 
 
 # ==========administrator to create/update/delete/show students========
@@ -141,6 +144,8 @@ class StudentUpdateView(UpdateView):
 class StudentDeleteView(DeleteView):
     model = Student
     success_url = reverse_lazy('student_list')
+
+
 # ===========================End=============================================
 
 
@@ -157,6 +162,8 @@ class StudentRequiredMixin:
     @method_decorator(user_passes_test(lambda u: u.groups.filter(name='student').exists()))
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+
 # ==========================End=============================================
 
 
@@ -205,7 +212,6 @@ class EnrolmentDetailView(StudentRequiredMixin, DetailView):
         return queryset.filter(enrolled_student=self.request.user.student_profile)
 
 
-
 class EnrolmentUpdateView(LecturerRequiredMixin, UpdateView):
     model = Enrolment
     form_class = EnrolmentForm
@@ -227,6 +233,8 @@ class EnrolmentUpdateView(LecturerRequiredMixin, UpdateView):
 class EnrolmentDeleteView(DeleteView):
     model = Enrolment
     success_url = reverse_lazy('enrolment_list')
+
+
 # =====================================End=================================================
 
 
@@ -285,6 +293,7 @@ def update_user_info(request):
         form = initial_form_class(instance=user)
     return render(request, 'registration/update_user_info.html', {'form': form})
 
+
 # ====================================End=======================================================
 
 
@@ -311,6 +320,50 @@ def send_email(request, enrolment_id):
         messages.error(request, str(e))
 
     return redirect('enrolment_list')
+
+
 # ================================end============================================
 
 
+# ================================Upload Students============================================
+@staff_member_required
+def upload_students(request):
+    if request.method == 'POST':
+        file = request.FILES['file']
+
+        # Read the Excel file
+        df = pd.read_excel(file)
+
+        # Process each row
+        for index, row in df.iterrows():
+            # Get the values from the Excel file
+            first_name = row['firstname']
+            last_name = row['lastname']
+            username = row['username']
+            email = row['email']
+            dob = row['dob']
+            group_name = row['group'].lower()
+
+            # Check if the username already exists in the database
+            if User.objects.filter(username=username).exists():
+                continue  # Skip adding this student
+
+            # Set the default password
+            default_password = '60x5x9rc'
+
+            # Create a new user with the default password
+            user = User.objects.create_user(username, email, default_password)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+
+            if group_name == 'student':
+                Student.objects.create(user=user, firstname=first_name, lastname=last_name, email=email, DOB=dob)
+            elif group_name == 'lecturer':
+                Lecturer.objects.create(user=user, firstname=first_name, lastname=last_name, email=email, DOB=dob)
+
+        messages.success(request, 'Students have been uploaded successfully.')
+        return HttpResponseRedirect(reverse('admin:gradebook_app_student_changelist'))
+    else:
+        return render(request, 'admin/gradebook_app/student/upload_student_form.html')
+# ================================end============================================
