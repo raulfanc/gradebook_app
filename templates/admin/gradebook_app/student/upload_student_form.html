@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% trans "Upload students" %}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="module aligned ">
+            <div class="form-row">
+                <label for="file" class="">{% trans "Select an Excel file" %}</label>
+                <input type="file" name="file" id="file" accept=".xls,.xlsx" required>
+            </div>
+        </fieldset>
+        <div class="submit-row">
+            <button type="submit" class="default">{% trans "Upload" %}</button>
+            <a href="{% url 'admin:gradebook_app_student_changelist' %}"
+               class="button">{% trans "Back to Students" %}</a>
+        </div>
+    </form>
+{% endblock %}

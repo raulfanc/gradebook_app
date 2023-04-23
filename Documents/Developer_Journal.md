@@ -112,10 +112,12 @@ Apr 22 2023 @3:00pm
 ---
 Apr 23 2023 @9:00pm
 - keep working on the Upload_Students Function
-
+- **Uploading students from excel files.function done!** 
+- used `pandas` to create a function-based view to handle the student upload 
+- used 'get_urls' in admin.py to makesure direct to the page without `pk`
+- skip adding a student if the username is existed in the current database
 ---
 **To be built**
-- Uploading students from excel files.
 - showing the user profile after logged in
 
 **Known bugs**
