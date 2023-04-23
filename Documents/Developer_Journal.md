@@ -100,8 +100,24 @@ Apr 21 2023 @6:00pm
 - Students now can view marks in the gradebook.
 
 ---
-To be built
+Apr 22 2023 @3:00pm
+- strated working on `uploading students from excel files`
+- used 'import-export-django' lib to do the job
+- not successful as the lib is not compatible with my user,student model
+
+@9:00pm
+- trying different approach, using 'pandas' lib to read excel file and save to database
+- 4 hours of debugging lol, still not working.
+
+---
+Apr 23 2023 @9:00pm
+- keep working on the Upload_Students Function
+
+---
+**To be built**
 - Uploading students from excel files.
-- User profile and Student/Lecturer profile are not connected
 - showing the user profile after logged in
+
+**Known bugs**
 - bug when regitser new user, should add check the user cannot log in if haven't updated profle.(now user can register and then close the page, witout updating profile), also can integrate update profle into part of registeration (easier approach).
+- User created by admin, after assign a group, doesn't update in the Student table
