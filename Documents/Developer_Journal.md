@@ -119,6 +119,7 @@ Apr 23 2023 @9:00pm
 ---
 **To be built**
 - showing the user profile after logged in
+- - refer to [CustomUser](./Documents/CustomUserModel) for better user management.
 
 **Known bugs**
 - bug when regitser new user, should add check the user cannot log in if haven't updated profle.(now user can register and then close the page, witout updating profile), also can integrate update profle into part of registeration (easier approach).
