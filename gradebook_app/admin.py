@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.urls import path
 
 from gradebook_app.models import Semester, Course, Class, Lecturer, Student, Enrolment
+from . import views
 from .forms import ClassForm
 
 
@@ -12,6 +14,14 @@ class EnrollmentAdmin(admin.ModelAdmin):
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('firstname', 'lastname', 'email', 'DOB')
     search_fields = ('firstname', 'lastname', 'email')
+
+    # use get_urls() to add a custom url to the admin page for uploading students
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('upload_students/', self.admin_site.admin_view(views.upload_students), name='upload_students'),
+        ]
+        return custom_urls + urls
 
 
 class ClassAdmin(admin.ModelAdmin):
