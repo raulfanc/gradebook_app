@@ -116,7 +116,12 @@ Apr 23 2023 @9:00pm
 - used `pandas` to create a function-based view to handle the student upload 
 - used 'get_urls' in admin.py to makesure direct to the page without `pk`
 - skip adding a student if the username is existed in the current database
+
 ---
+Apr 27 2023 @2:00pm - Modified css+html & password validator 
+- home,base,login,register page modified better looking
+- password validator set to simple for testing purpose
+- 
 **To be built**
 - showing the user profile after logged in
 - - refer to [CustomUser](./Documents/CustomUserModel) for better user management.

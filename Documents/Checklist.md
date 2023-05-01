@@ -36,7 +36,8 @@
 
 ### Deployment
 - [x] Setup Github for Django
-- [x] Deploy your website to Dochyper.
+- [ ] Deploy my website to Dochyper.
+- [ ] Host my website to [Pythonanywhere](https://www.pythonanywhere.com/)
    - [x]  1. Runtime.txt
 	- a plain text file containing a list of all the packages and their specific versions needed to run the application. By having a `requirements.txt` file
 	- make it easier for others to set up the development environment or deploy your application, as they can simply install the dependencies using the file.

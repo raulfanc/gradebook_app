@@ -1,21 +1,92 @@
 {% extends 'gradebook_app/base.html' %}
 
 {% block content %}
+    {#    {% if user.is_authenticated %}#}
+    {#        <p><a href="{% url 'class_list' %}">View Classes</a></p>#}
+    {#        <p><a href="{% url 'semester_list' %}">View Semesters</a></p>#}
+    {#        <p><a href="{% url 'lecturer_list' %}">View Lecturers</a></p>#}
+    {#        <p><a href="{% url 'student_list' %}">View Students</a></p>#}
+    {#        <p><a href="{% url 'logout' %}?next={% url 'home' %}">Logout</a></p>#}
+    {#    {% else %}#}
+    {#        <h1>Please log in</h1>#}
+    {#        <p><a href="{% url 'login' %}">Login</a></p>#}
+    {#        <form method="post" action="{% url 'login' %}">#}
+    {#            {% csrf_token %}#}
+    {#            {{ form.as_p }}#}
+    {#            <button type="submit">Login</button>#}
+    {#        </form>#}
+    {#        <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>#}
+    {#    {% endif %}#}
 
-    {% if user.is_authenticated %}
-{#        <p><a href="{% url 'class_list' %}">View Classes</a></p>#}
-{#        <p><a href="{% url 'semester_list' %}">View Semesters</a></p>#}
-{#        <p><a href="{% url 'lecturer_list' %}">View Lecturers</a></p>#}
-{#        <p><a href="{% url 'student_list' %}">View Students</a></p>#}
-{#        <p><a href="{% url 'logout' %}?next={% url 'home' %}">Logout</a></p>#}
-    {% else %}
-        <h1>Please log in</h1>
-{#        <p><a href="{% url 'login' %}">Login</a></p>#}
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
-    {% endif %}
+<!-- the previous base.html, archived here for now -->
+    {#<body>#}
+{#<nav class="navbar navbar-expand-lg navbar-light bg-light">#}
+{#    <div class="container-fluid">#}
+{#        <a class="navbar-brand" href="{% url 'home' %}">Gradebook</a>#}
+{#        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"#}
+{#                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">#}
+{#            <span class="navbar-toggler-icon"></span>#}
+{#        </button>#}
+{#        <div class="collapse navbar-collapse" id="navbarNav">#}
+{#            {% if user.is_authenticated %}#}
+{#                <ul class="navbar-nav me-auto mb-2 mb-lg-0">#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{% url 'semester_list' %}">Semester</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        {% if user|has_group:'lecturer' %}#}
+{#                            <a class="nav-link" href="{% url 'enrolment_list' %}">Lecturer Section</a>#}
+{#                        {% else %}#}
+{#                            <a class="nav-link disabled" href="#">Lecturer Section</a>#}
+{#                        {% endif %}#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        {% if user|has_group:'student' %}#}
+{#                            <a class="nav-link" href="{% url 'student_enrolment_list' %}">View Your Enrolled#}
+{#                                Classes</a>#}
+{#                        {% endif %}#}
+{#                </ul>#}
+{#            {% endif %}#}
+{#            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">#}
+{#                {% if user.is_authenticated %}#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{% url 'logout' %}?next={% url 'home' %}">Logout</a>#}
+{#                    </li>#}
+{#                {% else %}#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{% url 'admin:login' %}">Admin Login</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{% url 'login' %}">Login</a>#}
+{#                    </li>#}
+{#                {% endif %}#}
+{#            </ul>#}
+{#        </div>#}
+{#    </div>#}
+{#</nav>#}
+    {#</body>#}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="jumbotron">
+                    <h1 class="display-20">Welcome to the Gradebook app</h1>
+                    <hr class="my-4">
+                    <p class="lead">Web Application for management of grades and marks of students for a
+                        School/University.
+                    <p>
+                    <p class="lead"> Implemented using Django framework along with PostgreSQL database.
+                    </p>
+                    <p class="lead"> Logged in Lecturer can go to the Lecturer Section to mark assigned Student.
+                    </p>
+                    <p class="lead"> Logged in Student can go to the Student Section to view Marks.
+                    </p>
+                    <p class="lead"> More CRUD functions are available for Admins (user: admin, pwd: test1234)
+                    </p>
+                    <a class="btn btn-primary btn-lg" href="https://github.com/raulfanc/gradebook_app" role="button">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
