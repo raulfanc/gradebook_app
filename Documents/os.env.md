@@ -41,4 +41,4 @@ Remember to share the `.env` file or the environment variables with your team me
 
 ---
 # SMTP setup
-when setting up email service, also recommended to use this practice, see [SMTP GMail](SMTP_Gmail)
+when setting up email service, also recommended to use this practice, see [SMTP GMail](SMTP_Gmail.md)

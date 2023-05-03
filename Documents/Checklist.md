@@ -11,19 +11,19 @@
 - [x] 10.One student enrollment belongs to one student: The `Enrollment` model's foreign key to `Student` ensures this relationship.
 
 ### Client requirements:
-- [x] 1. Administrator can create/update/delete/show semesters. 
-- [x] 2. Administrator can create/update/delete/show courses. 
-- [x] 3. Administrator can create/update/delete/show classes. 
-- [x] 4. Administrator can create/update/delete/show lecturers. 
-- [x] 5. Administrator can assign/remove/change/show a lecturer to a class. 
-- [x] 6. Administrator can create/update/delete/show student 
-- [x] 7. Administrator can enrol/remove/show student to classes. 
-- [x] 8. Administrator can upload students from excel files to the website 
-- [x] 9. The system can email students when their marks are ready 
-- [x] 10. Lecturer can login to the gradebook 
-- [x] 11. Lectures can enter students’ marks in the gradebook 
-- [x] 12. Students can login to the gradebook 
-- [x] 13. Students can view their marks in the gradebook.
+- [x] 1: Administrator can create/update/delete/show semesters. 
+- [x] 2: Administrator can create/update/delete/show courses. 
+- [x] 3: Administrator can create/update/delete/show classes. 
+- [x] 4: Administrator can create/update/delete/show lecturers. 
+- [x] 5: Administrator can assign/remove/change/show a lecturer to a class. 
+- [x] 6: Administrator can create/update/delete/show student 
+- [x] 7: Administrator can enrol/remove/show student to classes. 
+- [x] 8: Administrator can upload students from excel files to the website 
+- [x] 9: The system can email students when their marks are ready 
+- [x] 10: Lecturer can login to the gradebook 
+- [x] 11: Lectures can enter students’ marks in the gradebook 
+- [x] 12: Students can login to the gradebook 
+- [x] 13: Students can view their marks in the gradebook.
 
 ---
 

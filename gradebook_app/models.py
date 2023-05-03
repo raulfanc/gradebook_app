@@ -14,7 +14,7 @@ class Semester(models.Model):
     name = models.IntegerField(choices=SEMESTER_CHOICES)
     start_date = models.DateField()
     end_date = models.DateField()
-    year = models.IntegerField(null=True, blank=True,editable=False)
+    year = models.IntegerField(null=True, blank=True, editable=False)
 
     def generate_name(self):
         semester_choice = dict(self.SEMESTER_CHOICES)[self.name]
@@ -86,7 +86,7 @@ class Student(models.Model):
             last_student = Student.objects.order_by('-id').first()
             if last_student:
                 last_id = int(last_student.StudentID[1:])
-                new_id = f'S{last_id+1:04}'
+                new_id = f'S{last_id + 1:04}'
             else:
                 new_id = 'S0001'
             self.StudentID = new_id
@@ -106,11 +106,12 @@ class Class(models.Model):
     class Meta:
         ordering = ['course', 'number']
 
+
 # ==============end of Base Models=============
 
 
 class Enrolment(models.Model):
-    enrolled_student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, blank=True, db_column='studentID')
+    enrolled_student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True, db_column='studentID')
     enrolled_class = models.ForeignKey(Class, on_delete=models.CASCADE, db_column='classID')
     enrollment_date = models.DateField(auto_now_add=True)
     grade_date = models.DateField(blank=True, null=True)

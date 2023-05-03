@@ -27,9 +27,10 @@
                     <td>{{ enrolment.enrolled_student }}</td>
                     <td>{{ enrolment.enrolled_class }}</td>
                     <td>{{ enrolment.grade }}</td>
-                    <td><a href="{% url 'update_grade' enrolment.pk %}" class="btn btn-primary btn-sm">
-                        <i class="bi bi-pencil"></i> Enter Grade
-                    </a>
+                    <td>
+                        <a href="{% url 'update_grade' enrolment.pk %}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil" >Enter Grade</i>
+                        </a>
                         <a href="{% url 'send_email' enrolment.pk %}" class="btn btn-success btn-sm">
                             <i class="bi bi-envelope"></i> Email
                         </a>

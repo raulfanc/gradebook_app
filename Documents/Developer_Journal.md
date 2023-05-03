@@ -121,7 +121,18 @@ Apr 23 2023 @9:00pm
 Apr 27 2023 @2:00pm - Modified css+html & password validator 
 - home,base,login,register page modified better looking
 - password validator set to simple for testing purpose
-- 
+
+---
+May 02 2023 @10:00pm - updated README.md
+- more intuitive README.md
+
+---
+May 03 2023 @10:00pm - admin.site development
+- added a column with [delete] and [update] buttons in `list_view` for all models in `admin.site`
+- [admin_config](/gradebook_app/admin_config) added to make the code more readable
+- updated README.md
+- model improvement for `Enrolment`, set cascade delete.
+
 **To be built**
 - showing the user profile after logged in
 - - refer to [CustomUser](./Documents/CustomUserModel) for better user management.
