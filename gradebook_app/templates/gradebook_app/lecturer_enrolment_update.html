@@ -6,7 +6,7 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Update</button>
-        <button type="button" onclick="location.href='{% url 'enrolment_list' %}';">Cancel</button>
+        <button type="button" onclick="location.href='{% url 'lecturer_enrolment_list' %}';">Cancel</button>
     </form>
 {% endblock %}
 

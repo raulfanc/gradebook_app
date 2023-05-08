@@ -8,6 +8,7 @@
             <tr>
                 <th>Course</th>
                 <th>Class</th>
+                <th>Lecturer</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -16,9 +17,9 @@
                 <tr>
                     <td>{{ enrolment.enrolled_class.course }}</td>
                     <td>{{ enrolment.enrolled_class.number }}</td>
-{#                    <td>{{ enrolment.enrolled_lectuer }}</td>#}
+                    <td>{{ enrolment.enrolled_class.lecturer.firstname }} {{ enrolment.enrolled_class.lecturer.lastname }}</td>
                     <td>
-                        <a href="{% url 'view_grade' enrolment.pk %}" class="btn btn-primary btn-sm">
+                        <a href="{% url 'student_enrolment_detail' enrolment.pk %}" class="btn btn-primary btn-sm">
                             <i class="bi bi-eye"></i> View Grade
                         </a>
                     </td>

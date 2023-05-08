@@ -41,8 +41,8 @@
   fields in the future and to avoid the complexity of many-to-many relationship)
 
 ##### User Authentication and Authorization
-- Function-based `User Registration` in ([views.py](./gradebook_app/views.py) 
-- Function-based `User Update Profile` (choose 'student' or 'lecturer' group) in [views.py](./gradebook_app/views.py), [forms.py](./gradebook_app/forms.py)
+- Function-based `User Registration` in ([views.py](gradebook_app/views1/generic_views.py) 
+- Function-based `User Update Profile` (choose 'student' or 'lecturer' group) in [views.py](gradebook_app/views1/generic_views.py), [forms.py](./gradebook_app/forms.py)
 - `User login` is managed by `Built-in User Authentication` system
 - Using [group_tags.py](./gradebook_app/templatetags/group_tags.py) to manage **Authorization** in the front end pages.
 - templates are developed in [registration folder](./gradebook_app/templates/registration)
@@ -50,7 +50,7 @@
 ##### Admin site customised functions
   [admin_config](./gradebook_app/admin_config) folder is used to customise the admin site, see all comments in the py files.
 1. `Upload_Student` 
-- managed by function-based [upload_student view](./gradebook_app/views.py), [student_admin](./gradebook_app/admin_config/student_admin.py)
+- managed by function-based [upload_student](gradebook_app/views/upload_student.py), [student_admin](./gradebook_app/admin_config/student_admin.py)
 - UI is customised in the admin site, to see [templates](templates/admin/gradebook_app/student)
 - [test.xlsx](./Documents/test.xlsx) is used to test the upload function
 2. `Enrol/remove/show student to classes` is managed by [enrolment_admin](./gradebook_app/admin_config/enrolment_admin.py)
@@ -58,21 +58,21 @@
 
 ##### Customised functions
   these functions were developed alongside some html templates.
-1. Only `Semester` model's CRUD were tested with [generic views](./gradebook_app/views.py), and developed [templates](./gradebook_app/templates/gradebook_app/) for testing only.
+1. Only `Semester` model's CRUD were tested with [generic views](gradebook_app/views/generic_views.py), and developed [templates](./gradebook_app/templates/gradebook_app/) for testing only.
 2. `Lecturer to Enter Marks
-- the `list_view` is managed by the class-based view [EnrolmentListView](./gradebook_app/views.py) to see the list of student who enrolled in the same class of this lecturer
-- the `detail_view` is managed by class-based view [EnrolmentUpdateView](./gradebook_app/views.py) 
+- `List of enrolled Students` is managed by the class-based view [LecturerEnrolmentListView](gradebook_app/views/enrolment.py) to see the list of student who enrolled in the same class of this lecturer
+- `Enter Mark` is managed by class-based view [LecturerEnrolmentUpdateView](gradebook_app/views/enrolment.py) and [LecturerEnrolmentForm](./gradebook_app/forms.py) to update the mark of that student
 3. `Lecturer to Email Student` 
 - the back-end is supported by Gmail's [SMTP service](./Documents/SMTP_Gmail.md)
-- function is managed by function-based view [send_email_view](./gradebook_app/views.py) to send email to those students who enrolled in the same class of this lecturer
+- function is managed by function-based view [send_email](gradebook_app/views/send_email.py) to send email to those students who enrolled in the same class of this lecturer
 4. `Stutdent to View Marks` 
-- the `list_view` is managed by [StudentEnrolmentListView](./gradebook_app/views.py) to see the list of enrolled classes (), if the student is not enrolled, will be handled by a well-displayed message.
-- the `detail_view` is managed by [StudentEnrolmentDetailView](./gradebook_app/views.py) to see the detail of the course, class and the marked grade.
+- the `list_view` is managed by [StudentEnrolmentListView](gradebook_app/views/enrolment.py) to see the list of enrolled classes (), if the student is not enrolled, will be handled by a well-displayed message.
+- the `detail_view` is managed by [StudentEnrolmentDetailView](gradebook_app/views/enrolment.py) to see the detail of the course, class and the marked grade.
 
 
 ##### Extended codebase for **a future customised administrator**
-- Generic view coded in ([views.py](./gradebook_app/views.py), 
-- Display control [forms.py](./gradebook_app/forms.py))
+- Generic view coded in [generic_views](gradebook_app/views/generic_views.py), 
+- Display control [forms.py](./gradebook_app/forms.py) to control fields showing
 - Rest of `models` shall repeatedly follow `Semester` model's CRUD [templates](./gradebook_app/templates/gradebook_app/)
 
 **NOTE:** since I've used the admin-site to manage the CRUD, so I didn't use the generic view for this project.

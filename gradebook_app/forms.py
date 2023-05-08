@@ -108,15 +108,13 @@ class UserUpdateForm(forms.ModelForm):
         return user
 
 
-# used views.py, EnrolmentForm is used to enrol a Lecturer into a class
-class EnrolmentForm(forms.ModelForm):
+class LecturerEnrolmentForm(forms.ModelForm):
     class Meta:
         model = Enrolment
-        fields = ['enrolled_student', 'enrolled_class', 'grade', 'grade_date']
+        fields = ['grade']
 
 
-# used views.py, EnrolmentStudentForm is used to enrol a Student into a class
-class EnrolmentStudentForm(forms.ModelForm):
-    class Meta:
-        model = Class
-        fields = ['students']
+# class StudentEnrolmentForm(forms.ModelForm):
+#     class Meta:
+#         model = Enrolment
+#         fields = ['grade']

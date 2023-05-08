@@ -133,10 +133,19 @@ May 03 2023 @10:00pm - admin.site development
 - updated README.md
 - model improvement for `Enrolment`, set cascade delete.
 
+May 09 2023 @10:00pm - CodeBase Refactoring
+- created a `views` folder to store all the views.py
+- renaming for views, urls, and templates to improve readability
+- removed non-used code to improve readability
+- fixed the templates references due to the folder restructure and renaming
+- all generic views are in one file
+- all function and class based views are in one file
+
+
 **To be built**
 - showing the user profile after logged in
 - - refer to [CustomUser](./Documents/CustomUserModel) for better user management.
 
-**Known bugs**
+**Known bugs**docker ps
 - bug when regitser new user, should add check the user cannot log in if haven't updated profle.(now user can register and then close the page, witout updating profile), also can integrate update profle into part of registeration (easier approach).
 - User created by admin, after assign a group, doesn't update in the Student table

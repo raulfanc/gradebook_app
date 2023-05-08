@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from gradebook_app import views
+from gradebook_app.views import upload_student
 from gradebook_app.admin_config.action_column_mixin import ActionsColumnMixin
 
 """this py file is for future development to modify 'Student' in admin site"""
@@ -16,7 +16,7 @@ class StudentAdmin(ActionsColumnMixin, admin.ModelAdmin):
         """avoid "pk redirect", use get_urls() to add a custom url to the admin page for uploading students"""
         urls = super().get_urls()
         custom_urls = [
-            path('upload_students/', self.admin_site.admin_view(views.upload_students), name='upload_students'),
+            path('upload_students/', self.admin_site.admin_view(upload_student.upload_students), name='upload_students'),
         ]
         return custom_urls + urls
 

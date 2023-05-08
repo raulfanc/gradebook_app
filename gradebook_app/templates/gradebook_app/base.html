@@ -27,7 +27,7 @@
                         </li>
                         <li class="nav-item mx-5">
                             {% if user|has_group:'lecturer' %}
-                                <a class="nav-link px-2 text-white" href="{% url 'enrolment_list' %}">Lecturer
+                                <a class="nav-link px-2 text-white" href="{% url 'lecturer_enrolment_list' %}">Lecturer
                                     Section</a>
                             {% else %}
                                 <a class="nav-link disabled" href="#">Lecturer Section</a>
